@@ -1,20 +1,27 @@
 # Dox
-[![Build Status](https://travis-ci.org/tj/dox.svg?branch=master)](https://travis-ci.org/tj/dox)
 
- Dox is a JavaScript documentation generator written with [node](http://nodejs.org). Dox no longer generates an opinionated structure or style for your docs, it simply gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
+Updated fork of [dox](https://github.com/tj/dox)
+
+Dox is a JavaScript documentation generator written with [node](http://nodejs.org). Dox gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
+
+Uses https://github.com/jsdoctypeparser/jsdoctypeparser for parsing.
 
 ## Installation
 
 Install from npm:
 
-    $ npm install -g dox
+```
+npm install -g dox
+```
 
 ## Usage Examples
 
 `dox(1)` operates over stdio:
 
-    $ dox < utils.js
-    ...JSON...
+```
+dox < utils.js
+...JSON...
+```
 
  to inspect the generated data you can use the `--debug` flag, which is easier to read than the JSON output:
 
@@ -127,8 +134,8 @@ Usage: dox [options]
 
 ``` javascript
 
-var dox = require('dox'),
-    code = "...";
+const dox = require('dox')
+const code = "...";
 
 var obj = dox.parseComments(code);
 
@@ -169,10 +176,11 @@ exports.write = function(str) {
 yields:
 
 ```js
-description:
-     { full: '<p>Output the given <code>str</code> to <em>stdout</em>.</p>',
-       summary: '<p>Output the given <code>str</code> to <em>stdout</em>.</p>',
-       body: '' },
+description: { 
+  full: '<p>Output the given <code>str</code> to <em>stdout</em>.</p>',
+  summary: '<p>Output the given <code>str</code> to <em>stdout</em>.</p>',
+  body: '' 
+},
 ```
 
   Large descriptions might look something like the following, where the "summary" is still the first paragraph, the remaining description becomes the "body". Keep in mind this _is_ markdown, so you can indent code, use lists, links, etc. Dox also augments markdown, allowing "Some Title:\n" to form a header.
@@ -474,3 +482,143 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+## CheatSheet
+
+Optional params can be set with `[]` or `{type=}` ending in `=` sign.
+
+```js
+/**
+ * Description about the function
+ * @param {string=} a  - description about a
+ * @param {string} [b] - description about b
+ */
+function example(a, b) {
+  // stuff
+}
+```
+
+Optional param with default
+
+```js
+/**
+ * Description about the function
+ * @param {string} [a="hi"]  - description about a
+ */
+function example(a = 'hi') {
+  // stuff
+}
+```
+
+
+Multiple types
+
+```js
+/**
+ * Description about the function
+ * @param {(string|number)} a	- description about a
+ */
+function example(a) {
+  // a can be string or number
+}
+```
+
+Any type
+
+```js
+/**
+ * Description about the function
+ * @param {*} a	- description about a
+ */
+function example(a) {
+  // a can be anything
+}
+```
+
+Variadic repeatable arguments
+
+```js
+/**
+ * Description about the function
+ * @param {...string}	a - description about a
+ */
+function example(...a) {
+  // a can be N number of strings
+  return a.map((x) => `_${x}`)
+}
+example('one', 'two', 'three')
+```
+
+Array of strings
+
+```js
+/**
+ * Description about the function
+ * @param {string[]}	a - description about a
+ */
+function example(a) {
+  return a.map((x) => `_${x}`)
+}
+example(['one', 'two', 'three'])
+```
+
+Function returns a promise with array of strings
+
+
+```js
+/**
+ * Description about the function
+ * @param {string[]}	a - description about a
+ * @return {Promise<string[]>} n	- Promise fulfilled by array of strings
+ */
+function example(a) {
+  return Promise.resolve(a.map((x) => `_${x}`))
+}
+example(['one', 'two', 'three']).then((newArray) => {
+  console.log(newArray)
+})
+```
+
+### Variables
+
+```js
+/**
+ * @type {number}
+ */
+var FOO = 1
+```
+
+```js
+/**
+ * @const {number}
+ */
+const FOO = 1
+```
+
+### Using Typedefs
+
+```js
+/**
+ * A song
+ * @typedef {Object} Song
+ * @property {string} title - The title
+ * @property {string} artist - The artist
+ * @property {number} year - The year
+ */
+
+/**
+ * Plays a song
+ * @param {Song} song - The {@link Song} to be played
+ */
+function play(song) {
+  // ...
+}
+``
+
+## Alternative libraries
+
+- https://github.com/jsdoc2md/jsdoc-to-markdown
+- https://github.com/kippisone/docblock
+- https://github.com/fkling/docblock-parser allows for custom patterns
+- https://github.com/togajs/tunic

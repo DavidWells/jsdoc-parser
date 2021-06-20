@@ -2,9 +2,9 @@
  * Module dependencies.
  */
 
-var dox = require('../')
-  , should = require('should')
-  , fs = require('fs');
+const dox = require('../')
+const should = require('should')
+const fs = require('fs')
 
 function fixture(name, fn) {
   fs.readFile(__dirname + '/fixtures/' + name, 'utf8', fn);

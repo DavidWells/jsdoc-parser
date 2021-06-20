@@ -3,9 +3,9 @@
  * Module dependencies.
  */
 
-var dox = require('../')
-  , should = require('should')
-  , fs = require('fs');
+const dox = require('../')
+const should = require('should')
+const fs = require('fs')
 
 function fixture(name, fn) {
   fs.readFile(__dirname + '/fixtures/' + name, 'utf8', fn);
@@ -796,13 +796,17 @@ module.exports = {
       comments[0].tags[0].should.be.eql({
           type: 'return'
         , types: [ 'Object' ]
-        , typesDescription: '<code>Object</code>'
+        , typesDescription: {
+          "name": "Object",
+          "type": "NAME"
+        }
         , description: '<p>description</p>'
         , string: '{Object} description'
         , nullable: false
         , nonNullable: false
         , variable: false
         , optional: false
+        , isImportedType: false
       });
       comments[0].description.full.should.be.equal('<p>foo description</p>');
       done();
