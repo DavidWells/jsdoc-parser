@@ -1,6 +1,6 @@
 # Dox
 
-Updated fork of [dox](https://github.com/tj/dox)
+Updated fork of [dox](https://github.com/tj/dox) that supports imported types.
 
 Dox is a JavaScript documentation generator written with [node](http://nodejs.org). Dox gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
 
