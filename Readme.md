@@ -1,17 +1,19 @@
-# Dox
+# Doxxx
 
 Updated fork of [dox](https://github.com/tj/dox) that supports imported types.
 
-Dox is a JavaScript documentation generator written with [node](http://nodejs.org). Dox gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
+Doxxx is a JavaScript documentation generator that uses JSdoc tags. 
 
-Uses https://github.com/jsdoctypeparser/jsdoctypeparser for parsing.
+Dox gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
+
+Uses [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) for parsing.
 
 ## Installation
 
 Install from npm:
 
 ```
-npm install -g dox
+npm install -g doxxx
 ```
 
 ## Usage Examples
@@ -106,8 +108,7 @@ This output can then be passed to a template for rendering. Look below at the "P
 
 ## Usage
 
-```
-
+```bash
 Usage: dox [options]
 
   Options:
@@ -127,20 +128,17 @@ Usage: dox [options]
 
     # operates over stdio
     $ dox < myfile.js > myfile.json
-
 ```
 
 ### Programmatic Usage
 
 ``` javascript
 
-const dox = require('dox')
+const dox = require('doxxx')
 const code = "...";
 
 var obj = dox.parseComments(code);
-
 // [{ tags:[ ... ], description, ... }, { ... }, ...]
-
 ```
 
 ## Properties
@@ -614,7 +612,7 @@ const FOO = 1
 function play(song) {
   // ...
 }
-``
+```
 
 ## Alternative libraries
 

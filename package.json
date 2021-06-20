@@ -3,8 +3,9 @@
   "description": "JSdoc documentation generator",
   "version": "1.0.0",
   "license": "MIT",
-  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+  "author": "David Wells <hello@davidwells.io>",
   "contributors": [
+    "TJ Holowaychuk <tj@vision-media.ca>",
     "Jarvis Badgley <chiper@chipersoft.com>",
     "Arseny Zarechnev <me@evindor.com>",
     "Thomas Parisot <hi@oncletom.io>",
@@ -14,10 +15,10 @@
     "Gion Kunz <gion.kunz@gmail.com>",
     "ForbesLindesay"
   ],
-  "homepage": "https://github.com/tj/dox",
+  "homepage": "https://github.com/DavidWells/jsdoc-parser",
   "repository": {
     "type": "git",
-    "url": "git://github.com/visionmedia/dox.git"
+    "url": "git://github.com/DavidWells/jsdoc-parser.git"
   },
   "keywords": [
     "docs",
