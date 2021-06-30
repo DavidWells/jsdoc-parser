@@ -620,3 +620,6 @@ function play(song) {
 - https://github.com/kippisone/docblock
 - https://github.com/fkling/docblock-parser allows for custom patterns
 - https://github.com/togajs/tunic
+- jest-docblock
+- jsdoctypeparser
+- jsdoc-md
