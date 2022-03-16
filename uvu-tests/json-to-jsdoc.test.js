@@ -15,18 +15,30 @@ test('JSON to JSDOC', async () => {
     "id": 1,
     "title": "delectus aut autem",
     "completed": false,
-    "items": [ 'one', 'two' ]
+    "items": [ 'one', 'two' ],
+    "tuple": [ false, true ],
+    "funky": {
+      "nice": "rad",
+      "whatever": true
+    }
   }
 
   const jsdocOne = `
-  /** @typedef {Object} json
+  /** 
+  * @typedef {Object} json
   * @property {Number} userId
   * @property {Number} id
   * @property {String} title
   * @property {Boolean} completed
-  * @property {Array} items
+  * @property {String[]} items
+  * @property {Boolean[]} tuple
+  * @property {object} funky
+  * @property {String} funky.nice
+  * @property {Boolean} funky.whatever
   */`
-  equal(convert(obj), jsdocOne, 'makes jsdocOne')
+  const one = convert(obj)
+  console.log('one', one)
+  equal(one, jsdocOne, 'makes jsdocOne')
 
   // const objTwo = {
   //   "userId": false,
@@ -40,6 +52,99 @@ test('JSON to JSDOC', async () => {
   // equal(convert(objTwo), jsdocTwo, 'makes jsdocTwo')
 })
 
+test.only('JSON to JSDOC DEEP', async () => {
+  const obj = {
+    "userId": 1,
+    "id": 1,
+    "funky": {
+      "nice": "rad",
+      "whatever": true
+    },
+    "deep": {
+      "thing": {
+        "here": {
+          "cool": true,
+          "arrayOfAny": [],
+        }
+      },
+      other: ['str', 'strTwo'],
+      fun: 122
+    }
+  }
+
+  const jsdocOne = `
+/**
+ * @typedef {Object} json
+ * @property {Number} userId
+ * @property {Number} id
+ * @property {Object} funky
+ * @property {String} funky.nice
+ * @property {Boolean} funky.whatever
+ * @property {Object} deep
+ * @property {Object} deep.thing
+ * @property {Object} deep.thing.here
+ * @property {Boolean} deep.thing.here.cool
+ * @property {Array} deep.thing.here.arrayOfAny
+ * @property·{String[]}·deep.other
+ * @property·{Number}·deep.fun
+ */`
+  const one = convert(obj)
+  console.log('one', one)
+  equal(one, jsdocOne, 'makes jsdocOne')
+})
+
+/**
+ * @typedef {Object} json
+ * @property {Number} userId
+ * @property {Number} id
+ * @property {String} title
+ * @property {Boolean} completed
+ * @property {String[]} items
+ * @property {Boolean[]} tuple
+ * @property {object} funky
+ * @property {String} funky.nice
+ * @property {Boolean} funky.whatever
+*/
+
+/**
+ * @typedef {Object} ButtonPropTypes
+ * @property {string} text
+ * @property {string} icon
+ */
+
+/** 
+* @typedef {Object} MyObj
+* @property {Number} userId
+* @property {Number} id
+* @property {String} title
+* @property {Boolean} completed
+* @property {String[]} items
+* @property·{Array<Array<Boolean>, Boolean>}·tuple
+*/
+
+
+/**
+ * @typedef AwesomeObject
+ * @type {Object}
+ * @property {string} name
+ * @property {boolean} next
+ * @property {string} test
+ */
+
+/**
+ * @param {Array.<AwesomeObject>} awesomeObjects Awesome objects.
+ */
+
+/**
+ * Test
+ * @param {MyObj} obj 
+ */
+function testing(obj) {
+
+}
+
+testing()
+
 function equal(one, two, details = '') {
   assert.equal(trimTrailingSpace(one), trimTrailingSpace(two), details)
 }
@@ -49,6 +154,7 @@ function trimTrailingSpace(str) {
     return s
       .replace(/^\s*/, '')
       .replace(/\s*$/, '')
+      .replace(/·/g, ' ')
   }).join('\n')
 }
 
