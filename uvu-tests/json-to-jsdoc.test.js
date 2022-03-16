@@ -25,7 +25,7 @@ test('JSON to JSDOC', async () => {
 
   const jsdocOne = `
   /** 
-  * @typedef {Object} json
+  * @typedef {Object} MyType
   * @property {Number} userId
   * @property {Number} id
   * @property {String} title
@@ -52,7 +52,50 @@ test('JSON to JSDOC', async () => {
   // equal(convert(objTwo), jsdocTwo, 'makes jsdocTwo')
 })
 
-test.only('JSON to JSDOC DEEP', async () => {
+test('simple object', async () => {
+  const obj = {
+    "userId": 1,
+  }
+
+  const jsdocOne = `
+/**
+ * @typedef {Object} MyType
+ * @property {Number} userId
+ */`
+  const one = convert(obj)
+  console.log('one', one)
+  equal(one, jsdocOne, 'makes jsdocOne')
+})
+
+// This is incorrect
+test.skip('simple array', async () => {
+  const obj = [{
+    "userId": 1,
+  }]
+
+  const jsdocOne = `
+/**
+ * @typedef {Array} MyType
+ * @property {Object} 0
+ * @property {Number} 0.userId
+ */`
+  const one = convert(obj)
+  console.log('one', one)
+  equal(one, jsdocOne, 'makes jsdocOne')
+  // SHOULD BE THIS
+  // /**
+  //  * @typedef MyType
+  //  * @type {Object}
+  //  * @property {string} userId
+  //  */
+  // /**
+  //  * @typedef MyTypeArray
+  //  * @type {Array.<MyType>}
+  //  */
+  // /** @type {MyTypeArray} */
+})
+
+test('JSON to JSDOC DEEP', async () => {
   const obj = {
     "userId": 1,
     "id": 1,
@@ -74,7 +117,7 @@ test.only('JSON to JSDOC DEEP', async () => {
 
   const jsdocOne = `
 /**
- * @typedef {Object} json
+ * @typedef {Object} MyType
  * @property {Number} userId
  * @property {Number} id
  * @property {Object} funky
