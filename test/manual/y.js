@@ -1,6 +1,6 @@
-var dox = require('../')
+const doxxx = require('../../lib/dox')
 
-var tag = dox.parseTag('@param {String|Buffer|Boolean|Number} [fun] - blah');
+var tag = doxxx.parseTag('@param {String|Buffer|Boolean|Number} [fun] - blah');
  
 // tag.type.should.equal('param');
 // tag.types.should.eql(['String', 'Buffer']);

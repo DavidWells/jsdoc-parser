@@ -1,4 +1,5 @@
-var dox = require('../')
+const dox = require('../../lib/dox')
+
 var code = [
   '/**',
   ' * Some free text',
