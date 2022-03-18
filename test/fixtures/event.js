@@ -1,3 +1,5 @@
+const Hurl = {}
+
 /**
  * Throw a snowball.
  *

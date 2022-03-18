@@ -2,7 +2,7 @@
  * One
  */
 var one = function() {
-    return ['**/**', '*/*', '*/**', '**/*'].join('');
+  return ['**/**', '*/*', '*/**', '**/*'].join('');
 }
 
 /**
@@ -10,14 +10,14 @@ var one = function() {
  * @param {number} num
  */
 var two = function(num) {
-    return num * 2;
+  return num * 2;
 }
 
 /**
  * Three
  */
 let three = function() {
-    return ['**/**', '*/*', '*/**', '**/*'].join('');
+  return ['**/**', '*/*', '*/**', '**/*'].join('');
 }
 
 /**
@@ -25,5 +25,5 @@ let three = function() {
  * @param {number} num
  */
 const four = function(num) {
-    return num * 2;
+  return num * 2;
 }

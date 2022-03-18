@@ -487,7 +487,7 @@ module.exports = {
         , parse = comments.shift();
 
       version.code.should.equal("exports.version = '0.0.1';");
-      parse.code.should.equal('exports.parse = function(str) {\n  return "wahoo";\n}');
+      parse.code.should.equal('exports.parse = function(config) {\n  return "wahoo";\n}');
       done();
     });
   },
@@ -794,19 +794,21 @@ module.exports = {
 
       comments.should.have.lengthOf(1);
       comments[0].tags[0].should.be.eql({
-          type: 'return'
-        , types: [ 'Object' ]
-        , typesDescription: {
+        type: 'return',
+        types: [ 'Object' ],
+        typesDescription: 'Object',
+        description: '<p>description</p>',
+        descriptionRaw: "description",
+        ast: {
           "name": "Object",
-          "type": "NAME"
-        }
-        , description: '<p>description</p>'
-        , string: '{Object} description'
-        , nullable: false
-        , nonNullable: false
-        , variable: false
-        , optional: false
-        , isImportedType: false
+          "type": "NAME",
+        },
+        string: '{Object} description',
+        nullable: false,
+        nonNullable: false,
+        variable: false,
+        optional: false,
+        isImportedType: false,
       });
       comments[0].description.full.should.be.equal('<p>foo description</p>');
       done();
@@ -894,8 +896,25 @@ module.exports = {
     });
   },
 
-  'test optional types for @enum': function (done) {
+  'test types for @enum': function (done) {
     fixture('enums.js', function (err, str){
+      var comments = dox.parseComments(str);
+      comments.length.should.equal(2);
+      comments[0].description.full.should.equal("<p>FSM states.</p>");
+      comments[0].tags[0].type.should.equal("enum");
+      comments[0].tags[0].types.length.should.equal(1);
+      comments[0].tags[0].string.should.equal("{number}");
+
+      comments[1].description.full.should.equal("<p>Colors.</p>");
+      comments[1].tags[0].type.should.equal("enum");
+      comments[0].tags[0].types.length.should.equal(1);
+      comments[1].tags[0].string.should.equal("{string}");
+      done();
+    });
+  },
+
+  'test optional types for @enum': function (done) {
+    fixture('enums-optional.js', function (err, str){
       var comments = dox.parseComments(str);
       comments.length.should.equal(2);
       comments[0].description.full.should.equal("<p>FSM states.</p>");

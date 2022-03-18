@@ -35,8 +35,12 @@ module.exports = {
           age: ['number']
         }
       ]);
+      // old
       // complexTypeParamAndReturn.tags[0].typesDescription.should
       //   .equal('<code>number</code>|<code>string</code>|{ name: <code>string</code>, age: <code>number</code> }');
+      // new
+      complexTypeParamAndReturn.tags[0].typesDescription.should.equal('number | string | {name: string, age: number}');
+        
       complexTypeParamAndReturn.tags[0].string.should
         .equal('{number|string|{name:string,age:number}} a');
 
@@ -50,6 +54,8 @@ module.exports = {
       ]);
       // complexTypeParamAndReturn.tags[1].typesDescription.should
       //   .equal('<code>number</code>|{ name: <code>string</code>, age: <code>number</code> }|<code>Array</code>');
+      complexTypeParamAndReturn.tags[1].typesDescription.should.equal('number | {name: string, age: number} | Array');
+
       complexTypeParamAndReturn.tags[1].string.should
         .equal('{number|{name:string,age:number}|Array} a');
       complexTypeParamAndReturn.tags[2].types.should.be.eql([
@@ -60,6 +66,9 @@ module.exports = {
       ]);
       // complexTypeParamAndReturn.tags[2].typesDescription.should
       //   .equal('{ name: <code>string</code>, age: <code>number</code> }');
+      complexTypeParamAndReturn.tags[2].typesDescription.should
+        .equal('{name: string, age: number}');
+        
       complexTypeParamAndReturn.tags[2].string.should
         .equal('{{name:string,age:number}}');
 

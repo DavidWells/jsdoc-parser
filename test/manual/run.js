@@ -1,4 +1,4 @@
-var dox = require('../')
+const dox = require('../../lib/dox')
 var code = `
 /**
  * tester
