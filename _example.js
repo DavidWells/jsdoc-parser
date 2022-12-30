@@ -50,9 +50,9 @@ import React from 'react'
 
 /**
  * Renders a <ButtonImport /> component with imported types
- * @param { import("./tiny").TinyProps } props
- * @param { import("./tiny").Lol } other
- * @param { import("./tiny").Chill } isChill
+ * @param { import("./_types.ts").TinyProps } [props] - optional props
+ * @param { import("./_types.ts").Lol } other - lol nice
+ * @param { import("./_types.ts").Chill } isChill - the coolest
  * @return {React.ReactElement} - React component
  */
 export default function ButtonImport(props) {

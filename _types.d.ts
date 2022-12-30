@@ -1,7 +1,7 @@
 /**
  * Before action hook.
  */
-export type TinyProps = {
+ export type TinyProps = {
   /**
    * Xyz 123
    */
@@ -36,7 +36,9 @@ export type Lol = {
 };
 
 /**
- * Chill
+ * Chill array
+ * @example
+ * let fruits: Chill
  */
 export type Chill = string[];
 

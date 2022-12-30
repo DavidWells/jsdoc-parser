@@ -32,7 +32,7 @@ test('JSON to JSDOC', async () => {
   * @property {Boolean} completed
   * @property {String[]} items
   * @property {Boolean[]} tuple
-  * @property {object} funky
+  * @property {Object} funky
   * @property {String} funky.nice
   * @property {Boolean} funky.whatever
   */`
