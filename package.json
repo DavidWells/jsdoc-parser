@@ -28,7 +28,7 @@
     "dox": "./bin/dox"
   },
   "scripts": {
-    "test": "make test",
+    "test": "npm run uvu && make test",
     "uvu": "uvu uvu-tests -r esm"
   },
   "dependencies": {

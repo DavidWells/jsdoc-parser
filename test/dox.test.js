@@ -804,7 +804,7 @@ module.exports = {
         typesDescription: 'Object',
         descriptionHtml: '<p>description</p>',
         description: "description",
-        ast: {
+        jsDocAst: {
           "name": "Object",
           "type": "NAME",
         },
@@ -813,7 +813,6 @@ module.exports = {
         nonNullable: false,
         variable: false,
         optional: false,
-        isImportedType: false,
       });
       comments[0].description.full.should.be.equal('<p>foo description</p>');
       done();
