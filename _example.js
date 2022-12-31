@@ -24,7 +24,7 @@ const codeTwo = `
 /**
 * Renders a <Button /> component
 * @param  {object}  [props] - Button props
-* @param  {string}  [props.text] - My button
+* @param  {string|boolean}  [props.text] - My button
 * @param  {boolean} [props.isActive] - is button active
 * @param  {string}  [props.className] - CSS class name
 * @param  {React.ReactNode} [props.children] - component children;
@@ -50,6 +50,7 @@ import React from 'react'
 
 /**
  * Renders a <ButtonImport /> component with imported types
+ * @param {string} [whatever='foo'] - string porp;
  * @param { import("./_types.ts").TinyProps } [props] - optional props
  * @param { import("./_types.ts").Lol } other - lol nice
  * @param { import("./_types.ts").Chill } isChill - the coolest
@@ -61,6 +62,19 @@ export default function ButtonImport(props) {
       {props.message || 'my button'}
     </button>
   )
+}
+
+/**
+ * Function two
+ * @param {number|string|{name:string,age:number}} a
+ * @param {number|{name:string,age:number}|Array} a
+ * @returns {{name:string,age:number}}
+ */
+function complexTypeParamAndReturn(a, b) {
+  return {
+    name: 'Test',
+    age: 30
+  }
 }
 `
 
