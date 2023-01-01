@@ -14,8 +14,8 @@ var code = `
 /** @extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text */
 /** @extends {Type} name description text */
 /** @extends [name] - description text */
-/** @extends name - description text */
-/** @extends name */
+/** @extends namex - description text */
+/** @extends namey */
 
 /** @tag {Type.<Type,Type(Type,Type.<Type>)>} - description text */
 /** @tag {Type} description text */

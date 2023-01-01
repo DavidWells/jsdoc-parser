@@ -29,6 +29,7 @@
   },
   "scripts": {
     "test": "npm run uvu && make test",
+    "x": "uvu test/manual '.test.([mc]js|[jt]sx?)$'",
     "uvu": "uvu uvu-tests -r esm"
   },
   "dependencies": {

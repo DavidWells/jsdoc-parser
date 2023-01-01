@@ -1,18 +1,20 @@
 const dox = require('../../lib/dox')
 var code = `
 /**
- *  makes banana
+ * makes banana
  * @returns {string}
  * @example
   banana(
-  'cool',
-  'red'
+    'cool',
+    'red'
   )
  */
 `;
 
 /**
  * makes banana
+ * @param {string} one - fruit one
+ * @param {string} two - fruit one
  * @returns {string}
  * @example
    banana(
@@ -20,8 +22,8 @@ var code = `
     'red'
   )
  */
-function banana() {
-  return 'yummers'
+function banana(one, two) {
+  return one + two + 'yummers'
 }
 
 var obj = dox.parseComments(code);

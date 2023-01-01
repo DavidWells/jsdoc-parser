@@ -41,7 +41,7 @@ module.exports = {
       // new
       complexTypeParamAndReturn.tags[0].typesDescription.should.equal('number | string | {name: string, age: number}');
         
-      complexTypeParamAndReturn.tags[0].string.should
+      complexTypeParamAndReturn.tags[0].text.should
         .equal('{number|string|{name:string,age:number}} a');
 
       complexTypeParamAndReturn.tags[1].types.should.be.eql([
@@ -56,7 +56,7 @@ module.exports = {
       //   .equal('<code>number</code>|{ name: <code>string</code>, age: <code>number</code> }|<code>Array</code>');
       complexTypeParamAndReturn.tags[1].typesDescription.should.equal('number | {name: string, age: number} | Array');
 
-      complexTypeParamAndReturn.tags[1].string.should
+      complexTypeParamAndReturn.tags[1].text.should
         .equal('{number|{name:string,age:number}|Array} a');
       complexTypeParamAndReturn.tags[2].types.should.be.eql([
         {
@@ -69,7 +69,7 @@ module.exports = {
       complexTypeParamAndReturn.tags[2].typesDescription.should
         .equal('{name: string, age: number}');
         
-      complexTypeParamAndReturn.tags[2].string.should
+      complexTypeParamAndReturn.tags[2].text.should
         .equal('{{name:string,age:number}}');
 
       /////////////////////////////////////
@@ -90,7 +90,7 @@ module.exports = {
           }]
         }
       ]);
-      nestedComplexTypeParam.tags[0].string.should
+      nestedComplexTypeParam.tags[0].text.should
         .equal('{number | string | {length: number, type: {name: {first: string, last: string}, id: number | string}}} a Description of param');
 
       /////////////////////////////////////
@@ -98,28 +98,28 @@ module.exports = {
       /////////////////////////////////////
       optionalParam.tags.should.with.lengthOf(1);
       optionalParam.tags[0].optional.should.be.true;
-      optionalParam.tags[0].string.should.equal('{number=} a');
+      optionalParam.tags[0].text.should.equal('{number=} a');
 
       /////////////////////////////////////
       // nullableParam
       /////////////////////////////////////
       nullableParam.tags.should.with.lengthOf(1);
       nullableParam.tags[0].nullable.should.be.true;
-      nullableParam.tags[0].string.should.equal('{?number} a');
+      nullableParam.tags[0].text.should.equal('{?number} a');
 
       /////////////////////////////////////
       // nonNullableParam
       /////////////////////////////////////
       nonNullableParam.tags.should.with.lengthOf(1);
       nonNullableParam.tags[0].nonNullable.should.be.true;
-      nonNullableParam.tags[0].string.should.equal('{!number} a');
+      nonNullableParam.tags[0].text.should.equal('{!number} a');
 
       /////////////////////////////////////
       // variableParam
       /////////////////////////////////////
       variableParam.tags.should.with.lengthOf(1);
       variableParam.tags[0].variable.should.be.true;
-      variableParam.tags[0].string.should.equal('{...number} a');
+      variableParam.tags[0].text.should.equal('{...number} a');
 
       /////////////////////////////////////
       // optionalVariableNullableParam
@@ -128,7 +128,7 @@ module.exports = {
       // optionalVariableNullableParam.tags[0].optional.should.be.true;
       // optionalVariableNullableParam.tags[0].variable.should.be.true;
       // optionalVariableNullableParam.tags[0].nullable.should.be.true;
-      // optionalVariableNullableParam.tags[0].string.should.equal('{?...number=} a');
+      // optionalVariableNullableParam.tags[0].text.should.equal('{?...number=} a');
 
       done();
     });
