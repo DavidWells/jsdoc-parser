@@ -46,12 +46,12 @@ module.exports = {
       version.description.summaryHtml.should.equal('<p>Library version.</p>');
       version.description.html.should.equal('<p>Library version.</p>');
       version.tags.should.have.length(2);
-      version.tags[0].type.should.equal('type');
+      version.tags[0].tagType.should.equal('type');
       version.tags[0].types.should.eql(['String']);
-      version.tags[0].text.should.equal('{String}');
-      version.tags[1].type.should.equal('api');
+      version.tags[0].tagValue.should.equal('{String}');
+      version.tags[1].tagType.should.equal('api');
       version.tags[1].visibility.should.equal('public');
-      version.tags[1].text.should.equal('public');
+      version.tags[1].tagValue.should.equal('public');
       version.ctx.type.should.equal('property');
       version.ctx.receiver.should.equal('exports');
       version.ctx.name.should.equal('version');
@@ -61,9 +61,13 @@ module.exports = {
 
       var parse = comments.shift();
       parse.description.summaryHtml.should.equal('');
-      parse.tags[0].type.should.equal('param');
+      parse.tags[0].tagType.should.equal('param');
       parse.tags[0].name.should.equal('config');
-      parse.tags[0].descriptionHtml.should.equal('<p>An object that must provide a <code>requestExecutor</code> field.</p>');
+      // console.log('parse.tags[0]', parse.tags[0])
+      // process.exit(1)
+      // parse.tags[0].tagValue.should.equal('An object that must provide a <code>requestExecutor</code> field.');
+      parse.tags[0].description.should.equal('An object that must provide a `requestExecutor` field.');
+      // parse.tags[0].descriptionHtml.should.equal('<p>An object that must provide a <code>requestExecutor</code> field.</p>');
       parse.tags[0].types.should.eql(['Object']);
       parse.line.should.equal(12);
       parse.codeStart.should.equal(15);
@@ -140,7 +144,7 @@ module.exports = {
 
       var escape = comments.pop();
       escape.tags.should.have.length(4);
-      escape.tags[3].text.should.equal('With `Markdown` syntax');
+      escape.tags[3].tagValue.should.equal('With `Markdown` syntax');
       escape.tags[3].html.should.equal('<p>With <code>Markdown</code> syntax</p>');
       escape.description.html.should.equal('<p>Escape the given <code>html</code>.</p>');
       escape.ctx.type.should.equal('function');
@@ -497,8 +501,8 @@ module.exports = {
   'test .parseComments() titles': function(done){
     fixture('titles.js', function(err, str){
       var comments = dox.parseComments(str);
-      console.log('test .parseComments() titles')
-      deepLog(comments)
+      // console.log('test .parseComments() titles')
+      // deepLog(comments)
       comments[0].description.bodyHtml.should.containEql('<h2>Some examples</h2>');
       comments[0].description.bodyHtml.should.not.containEql('<h2>for example</h2>');
       comments[0].description.bodyHtml.should.containEql('<h2>Some longer thing for example</h2>');
@@ -507,11 +511,11 @@ module.exports = {
 
       comments[1].description.html.should.equal('<p>Description 1</p>');
       comments[1].tags.should.have.length(2);
-      comments[1].tags[0].type.should.equal('description');
-      comments[1].tags[0].text.should.equal('Description 2');
+      comments[1].tags[0].tagType.should.equal('description');
+      comments[1].tags[0].tagValue.should.equal('Description 2');
       comments[1].tags[0].html.should.equal('<p>Description 2</p>');
-      comments[1].tags[1].type.should.equal('description');
-      comments[1].tags[1].text.should.equal('Description 3');
+      comments[1].tags[1].tagType.should.equal('description');
+      comments[1].tags[1].tagValue.should.equal('Description 3');
       comments[1].tags[1].html.should.equal('<p>Description 3</p>');
 
       comments[2].description.html.should.equal('<p>Something Else</p>');
@@ -614,129 +618,132 @@ module.exports = {
 
   'test .parseTag() @constructor': function(){
     var tag = dox.parseTag('@constructor');
-    tag.type.should.equal('constructor');
+    tag.tagType.should.equal('constructor');
   },
 
   'test .parseTag() @see': function(){
     var tag = dox.parseTag('@see http://google.com');
-    tag.type.should.equal('see');
+    tag.tagType.should.equal('see');
     tag.title.should.equal('');
     tag.url.should.equal('http://google.com');
 
     var tag = dox.parseTag('@see Google http://google.com');
-    tag.type.should.equal('see');
+    tag.tagType.should.equal('see');
     tag.title.should.equal('Google');
     tag.url.should.equal('http://google.com');
 
     var tag = dox.parseTag('@see exports.parseComment');
-    tag.type.should.equal('see');
+    tag.tagType.should.equal('see');
     tag.local.should.equal('exports.parseComment');
    },
 
   'test .parseTag() @api': function(){
     var tag = dox.parseTag('@api private');
-    tag.type.should.equal('api');
+    tag.tagType.should.equal('api');
     tag.visibility.should.equal('private');
   },
 
   'test .parseTag() @type': function(){
     var tag = dox.parseTag('@type {String}');
-    tag.type.should.equal('type');
+    tag.tagType.should.equal('type');
     tag.types.should.eql(['String']);
   },
 
   'test .parseTag() @param': function(){
     var tag = dox.parseTag('@param {String|Buffer}');
+    /*
     console.log('tag', tag)
-    tag.type.should.equal('param');
+    /** */
+    tag.tagType.should.equal('param');
     tag.types.should.eql(['String', 'Buffer']);
     tag.name.should.equal('');
     tag.description.should.equal('');
-    tag.text.should.equal('{String|Buffer}');
+    tag.tagValue.should.equal('{String|Buffer}');
     tag.optional.should.be.false;
   },
 
   'test .parseTag() @param optional': function(){
     var tag = dox.parseTag('@param {string} [foo]')
-    tag.type.should.equal('param');
+    tag.tagType.should.equal('param');
     tag.types.should.eql(['string']);
-    tag.name.should.equal('[foo]');
+    tag.name.should.equal('foo');
+    tag.nameRaw.should.equal('[foo]');
     tag.description.should.equal('');
-    tag.text.should.equal('{string} [foo]');
+    tag.tagValue.should.equal('{string} [foo]');
     tag.optional.should.be.true;
 
     var tag = dox.parseTag('@param {string=} foo')
-    tag.type.should.equal('param');
+    tag.tagType.should.equal('param');
     tag.types.should.eql(['string']);
     tag.name.should.equal('foo');
     tag.description.should.equal('');
-    tag.text.should.equal('{string=} foo');
+    tag.tagValue.should.equal('{string=} foo');
     tag.optional.should.be.true;
 
     var tag = dox.parseTag('@param {string?} foo')
-    tag.type.should.equal('param');
+    tag.tagType.should.equal('param');
     tag.types.should.eql(['string']);
     tag.name.should.equal('foo');
     tag.description.should.equal('');
-    tag.text.should.equal('{string?} foo');
+    tag.tagValue.should.equal('{string?} foo');
     tag.nullable.should.be.true;
 
     var tag = dox.parseTag('@param {string|Buffer=} foo')
-    tag.type.should.equal('param');
+    tag.tagType.should.equal('param');
     tag.types.should.eql(['string', 'Buffer']);
     tag.name.should.equal('foo');
     tag.description.should.equal('');
-    tag.text.should.equal('{string|Buffer=} foo');
+    tag.tagValue.should.equal('{string|Buffer=} foo');
     tag.optional.should.be.true;
   },
 
   'test .parseTag() @return': function(){
     var tag = dox.parseTag('@return {String} a normal string');
-    tag.type.should.equal('return');
+    tag.tagType.should.equal('return');
     tag.types.should.eql(['String']);
     tag.description.should.equal('a normal string');
-    tag.text.should.equal('{String} a normal string');
+    tag.tagValue.should.equal('{String} a normal string');
   },
 
   'test .parseTag() @augments': function(){
     var tag = dox.parseTag('@augments otherClass');
-    tag.type.should.equal('augments');
+    tag.tagType.should.equal('augments');
     tag.otherClass.should.equal('otherClass')
-    tag.text.should.equal('otherClass');
+    tag.tagValue.should.equal('otherClass');
   },
 
   'test .parseTag() @author': function(){
     var tag = dox.parseTag('@author Bob Bobson');
-    tag.type.should.equal('author');
-    tag.text.should.equal('Bob Bobson');
+    tag.tagType.should.equal('author');
+    tag.tagValue.should.equal('Bob Bobson');
   },
 
   'test .parseTag() @borrows': function(){
     var tag = dox.parseTag('@borrows foo as bar');
-    tag.type.should.equal('borrows');
+    tag.tagType.should.equal('borrows');
     tag.otherMemberName.should.equal('foo');
     tag.thisMemberName.should.equal('bar');
-    tag.text.should.equal('foo as bar');
+    tag.tagValue.should.equal('foo as bar');
   },
 
   'test .parseTag() @memberOf': function(){
     var tag = dox.parseTag('@memberOf Foo.bar')
-    tag.type.should.equal('memberOf')
+    tag.tagType.should.equal('memberOf')
     tag.parent.should.equal('Foo.bar')
-    tag.text.should.equal('Foo.bar')
+    tag.tagValue.should.equal('Foo.bar')
   },
 
   'test .parseTag() @example': function(){
     tag = dox.parseTag('@example\n    Foo.bar();', true);
-    tag.type.should.equal('example')
+    tag.tagType.should.equal('example')
     // console.log('tag', tag)
-    tag.text.should.equal('Foo.bar();');
+    tag.tagValue.should.equal('Foo.bar();');
   },
 
   'test .parseTag() default': function(){
     var tag = dox.parseTag('@hello universe is better than world');
-    tag.type.should.equal('hello');
-    tag.text.should.equal('universe is better than world');
+    tag.tagType.should.equal('hello');
+    tag.tagValue.should.equal('universe is better than world');
   },
 
   'test .parseComments() code with no comments': function(done){
@@ -765,9 +772,9 @@ module.exports = {
       var comments = dox.parseComments(str)
         , all = comments.shift();
       all.tags.should.have.length(1);
-      all.tags[0].type.should.equal('return');
-      all.tags[0].descriptionHtml.should.equal('<p>Digit</p>');
-      all.tags[0].text.should.equal('{number} Digit');
+      all.tags[0].tagType.should.equal('return');
+      // all.tags[0].descriptionHtml.should.equal('<p>Digit</p>');
+      all.tags[0].tagValue.should.equal('{number} Digit');
       all.description.html.should.equal('');
       all.description.summaryHtml.should.equal('');
       all.description.summaryHtml.should.equal('');
@@ -816,16 +823,17 @@ module.exports = {
 
       comments.should.have.lengthOf(1);
       comments[0].tags[0].should.be.eql({
-        type: 'return',
+        tagType: 'return',
+        tagValue: "{Object} description",
+        tagFull: "@return {Object} description",
+        type: 'Object',
         types: [ 'Object' ],
-        typesDescription: 'Object',
-        descriptionHtml: '<p>description</p>',
+        // descriptionHtml: '<p>description</p>',
         description: "description",
         jsDocAst: {
           "name": "Object",
           "type": "NAME",
         },
-        text: '{Object} description',
         nullable: false,
         nonNullable: false,
         variable: false,
@@ -840,6 +848,7 @@ module.exports = {
     fixture('alias.js', function(err, str){
       var comments = dox.parseComments(str);
       var apiDocs = dox.api(comments);
+      // console.log('alias apiDocs', apiDocs)
       apiDocs.should.startWith("  - [hello()](#hello)\n  - [window.hello()](#windowhello)\n\n");
       done();
     });
@@ -923,14 +932,14 @@ module.exports = {
       var comments = dox.parseComments(str);
       comments.length.should.equal(2);
       comments[0].description.html.should.equal("<p>FSM states.</p>");
-      comments[0].tags[0].type.should.equal("enum");
+      comments[0].tags[0].tagType.should.equal("enum");
       comments[0].tags[0].types.length.should.equal(1);
-      comments[0].tags[0].text.should.equal("{number}");
+      comments[0].tags[0].tagValue.should.equal("{number}");
 
       comments[1].description.html.should.equal("<p>Colors.</p>");
-      comments[1].tags[0].type.should.equal("enum");
+      comments[1].tags[0].tagType.should.equal("enum");
       comments[0].tags[0].types.length.should.equal(1);
-      comments[1].tags[0].text.should.equal("{string}");
+      comments[1].tags[0].tagValue.should.equal("{string}");
       done();
     });
   },
@@ -940,14 +949,14 @@ module.exports = {
       var comments = dox.parseComments(str);
       comments.length.should.equal(2);
       comments[0].description.html.should.equal("<p>FSM states.</p>");
-      comments[0].tags[0].type.should.equal("enum");
+      comments[0].tags[0].tagType.should.equal("enum");
       comments[0].tags[0].types.length.should.equal(0);
-      comments[0].tags[0].text.should.equal("");
+      comments[0].tags[0].tagValue.should.equal("");
 
       comments[1].description.html.should.equal("<p>Colors.</p>");
-      comments[1].tags[0].type.should.equal("enum");
+      comments[1].tags[0].tagType.should.equal("enum");
       comments[0].tags[0].types.length.should.equal(0);
-      comments[1].tags[0].text.should.equal("");
+      comments[1].tags[0].tagValue.should.equal("");
       done();
     });
   },
@@ -958,16 +967,16 @@ module.exports = {
       //console.log('comments', comments)
       comments.length.should.equal(2);
       comments[0].description.html.should.equal("<p>Raise an exception for fun.</p>");
-      comments[0].tags[0].type.should.equal("throws");
+      comments[0].tags[0].tagType.should.equal("throws");
       comments[0].tags[0].types.length.should.equal(0);
-      comments[0].tags[0].text.should.equal("An error message.");
-      comments[0].tags[0].descriptionHtml.should.equal("<p>An error message.</p>");
+      comments[0].tags[0].tagValue.should.equal("An error message.");
+      // comments[0].tags[0].descriptionHtml.should.equal("<p>An error message.</p>");
 
       comments[1].description.html.should.equal("<p>Validate user input.</p>");
-      comments[1].tags[0].type.should.equal("throws");
+      comments[1].tags[0].tagType.should.equal("throws");
       comments[1].tags[0].types[0].should.equal("TypeError");
-      comments[1].tags[0].text.should.equal("{TypeError} Invalid argument.");
-      comments[1].tags[0].descriptionHtml.should.equal("<p>Invalid argument.</p>");
+      comments[1].tags[0].tagValue.should.equal("{TypeError} Invalid argument.");
+      //comments[1].tags[0].descriptionHtml.should.equal("<p>Invalid argument.</p>");
       done();
     });
   },
@@ -980,16 +989,16 @@ module.exports = {
       comments[0].description.html.should.equal("");
       comments[0].tags.length.should.equal(3);
 
-      comments[0].tags[0].type.should.equal("fileoverview");
-      comments[0].tags[0].text.should.equal("Takes two options objects and merges them");
+      comments[0].tags[0].tagType.should.equal("fileoverview");
+      comments[0].tags[0].tagValue.should.equal("Takes two options objects and merges them");
       comments[0].tags[0].html.should.equal("<p>Takes two options objects and merges them</p>");
 
-      comments[0].tags[1].type.should.equal("author");
-      comments[0].tags[1].text.should.equal("Scott Nath");
+      comments[0].tags[1].tagType.should.equal("author");
+      comments[0].tags[1].tagValue.should.equal("Scott Nath");
       comments[0].tags[1].html.should.equal("<p>Scott Nath</p>");
 
-      comments[0].tags[2].type.should.equal("requires");
-      comments[0].tags[2].text.should.equal("NPM:lodash.merge");
+      comments[0].tags[2].tagType.should.equal("requires");
+      comments[0].tags[2].tagValue.should.equal("NPM:lodash.merge");
       comments[0].tags[2].html.should.equal("<p>NPM:lodash.merge</p>");
       done();
     });

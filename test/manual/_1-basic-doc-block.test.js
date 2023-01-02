@@ -34,72 +34,78 @@ export default function Button(props = {}) {
   process.exit(1)
   /** */
 
-
   assert.equal(comments, [
     {
       tags: [
         {
-          type: 'param',
-          name: '[props]',
+          tagType: 'param',
+          tagValue: '{object}  [props] - Button props',
+          tagFull: '@param  {object}  [props] - Button props',
+          name: 'props',
+          nameRaw: '[props]',
           description: 'Button props',
+          type: 'object',
           types: [ 'object' ],
-          typesDescription: 'object',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'object' },
-          string: '{object}  [props] - Button props',
-          descriptionHtml: '<p>Button props</p>'
+          jsDocAst: { type: 'NAME', name: 'object' }
         },
         {
-          type: 'param',
-          name: '[props.text]',
+          tagType: 'param',
+          tagValue: '{string}  [props.text] - My button',
+          tagFull: '@param  {string}  [props.text] - My button',
+          name: 'props.text',
+          nameRaw: '[props.text]',
           description: 'My button',
+          type: 'string',
           types: [ 'string' ],
-          typesDescription: 'string',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'string' },
-          string: '{string}  [props.text] - My button',
-          descriptionHtml: '<p>My button</p>'
+          jsDocAst: { type: 'NAME', name: 'string' }
         },
         {
-          type: 'param',
-          name: '[props.isActive]',
+          tagType: 'param',
+          tagValue: '{boolean} [props.isActive] - is button active',
+          tagFull: '@param  {boolean} [props.isActive] - is button active',
+          name: 'props.isActive',
+          nameRaw: '[props.isActive]',
           description: 'is button active',
+          type: 'boolean',
           types: [ 'boolean' ],
-          typesDescription: 'boolean',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'boolean' },
-          string: '{boolean} [props.isActive] - is button active',
-          descriptionHtml: '<p>is button active</p>'
+          jsDocAst: { type: 'NAME', name: 'boolean' }
         },
         {
-          type: 'param',
-          name: '[props.className]',
+          tagType: 'param',
+          tagValue: '{string}  [props.className] - CSS class name',
+          tagFull: '@param  {string}  [props.className] - CSS class name',
+          name: 'props.className',
+          nameRaw: '[props.className]',
           description: 'CSS class name',
+          type: 'string',
           types: [ 'string' ],
-          typesDescription: 'string',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'string' },
-          string: '{string}  [props.className] - CSS class name',
-          descriptionHtml: '<p>CSS class name</p>'
+          jsDocAst: { type: 'NAME', name: 'string' }
         },
         {
-          type: 'param',
-          name: '[props.children]',
+          tagType: 'param',
+          tagValue: '{React.ReactNode} [props.children] - component children;',
+          tagFull: '@param  {React.ReactNode} [props.children] - component children;',
+          name: 'props.children',
+          nameRaw: '[props.children]',
           description: 'component children;',
+          type: 'React.ReactNode',
           types: [ 'React.ReactNode' ],
-          typesDescription: 'React.ReactNode',
           optional: true,
           nullable: false,
           nonNullable: false,
@@ -110,16 +116,17 @@ export default function Button(props = {}) {
             name: 'ReactNode',
             quoteStyle: 'none',
             hasEventPrefix: false
-          },
-          string: '{React.ReactNode} [props.children] - component children;',
-          descriptionHtml: '<p>component children;</p>'
+          }
         },
         {
-          type: 'param',
-          name: '[props.style]',
+          tagType: 'param',
+          tagValue: '{React.CSSProperties} [props.style] - used to set the CSS of the button',
+          tagFull: '@param  {React.CSSProperties} [props.style] - used to set the CSS of the button',
+          name: 'props.style',
+          nameRaw: '[props.style]',
           description: 'used to set the CSS of the button',
+          type: 'React.CSSProperties',
           types: [ 'React.CSSProperties' ],
-          typesDescription: 'React.CSSProperties',
           optional: true,
           nullable: false,
           nonNullable: false,
@@ -130,14 +137,15 @@ export default function Button(props = {}) {
             name: 'CSSProperties',
             quoteStyle: 'none',
             hasEventPrefix: false
-          },
-          string: '{React.CSSProperties} [props.style] - used to set the CSS of the button',
-          descriptionHtml: '<p>used to set the CSS of the button</p>'
+          }
         },
         {
-          type: 'return',
+          tagType: 'return',
+          tagValue: '{React.ReactElement} - React component',
+          tagFull: '@return {React.ReactElement} - React component',
+          description: 'React component',
+          type: 'React.ReactElement',
           types: [ 'React.ReactElement' ],
-          typesDescription: 'React.ReactElement',
           optional: false,
           nullable: false,
           nonNullable: false,
@@ -148,17 +156,16 @@ export default function Button(props = {}) {
             name: 'ReactElement',
             quoteStyle: 'none',
             hasEventPrefix: false
-          },
-          description: 'React component',
-          string: '{React.ReactElement} - React component',
-          descriptionHtml: '<p>React component</p>'
+          }
         }
       ],
       description: {
-        raw: 'Renders a <Button /> component',
-        full: '<p>Renders a <Button /> component</p>',
-        summary: '<p>Renders a <Button /> component</p>',
-        body: ''
+        summary: 'Renders a <Button /> component',
+        body: '',
+        text: 'Renders a <Button /> component',
+        html: '<p>Renders a <Button /> component</p>',
+        summaryHtml: '<p>Renders a <Button /> component</p>',
+        bodyHtml: ''
       },
       isPrivate: false,
       isConstructor: false,
@@ -175,7 +182,7 @@ export default function Button(props = {}) {
         '    </button>\n' +
         '  )\n' +
         '}',
-      ctx: { type: 'function', name: 'Button', string: 'Button()' }
+      ctx: { type: 'function', name: 'Button', text: 'Button()' }
     }
   ], 'comments match')
 })

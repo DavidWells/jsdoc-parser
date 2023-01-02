@@ -17,7 +17,7 @@ const basicDocBlock = `
 * @param  {string}  [name='bob'] - persons name
 * @param  {object}  [opts] - Cool checker options
 * @param  {string}  [opts.age] - Persons age
-* @param  {string}  [opts.height] - Persons height
+* @param  {string}  [opts.height=100] - Persons height
 * @param  {boolean} [opts.isRad] - Rad checker
 * @settings foo=bar baz=yippe
 * @return {boolean} - React component
@@ -28,7 +28,7 @@ export default function isCool(name, opts = {}) {
 }
 `
   const comments = doxxx.parseComments(basicDocBlock)
-  //*
+  /*
   deepLog(comments)
   process.exit(1)
   /** */
@@ -37,94 +37,112 @@ export default function isCool(name, opts = {}) {
     {
       tags: [
         {
-          type: 'param',
-          name: "[name='bob']",
+          tagType: 'param',
+          tagValue: "{string}  [name='bob'] - persons name",
+          tagFull: "@param  {string}  [name='bob'] - persons name",
+          name: 'name',
+          nameRaw: "[name='bob']",
           description: 'persons name',
+          defaultValue: 'bob',
+          type: 'string',
           types: [ 'string' ],
-          typesDescription: 'string',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'string' },
-          string: "{string}  [name='bob'] - persons name",
-          descriptionHtml: '<p>persons name</p>'
+          jsDocAst: { type: 'NAME', name: 'string' }
         },
         {
-          type: 'param',
-          name: '[opts]',
+          tagType: 'param',
+          tagValue: '{object}  [opts] - Cool checker options',
+          tagFull: '@param  {object}  [opts] - Cool checker options',
+          name: 'opts',
+          nameRaw: '[opts]',
           description: 'Cool checker options',
+          type: 'object',
           types: [ 'object' ],
-          typesDescription: 'object',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'object' },
-          string: '{object}  [opts] - Cool checker options',
-          descriptionHtml: '<p>Cool checker options</p>'
+          jsDocAst: { type: 'NAME', name: 'object' }
         },
         {
-          type: 'param',
-          name: '[opts.age]',
+          tagType: 'param',
+          tagValue: '{string}  [opts.age] - Persons age',
+          tagFull: '@param  {string}  [opts.age] - Persons age',
+          name: 'opts.age',
+          nameRaw: '[opts.age]',
           description: 'Persons age',
+          type: 'string',
           types: [ 'string' ],
-          typesDescription: 'string',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'string' },
-          string: '{string}  [opts.age] - Persons age',
-          descriptionHtml: '<p>Persons age</p>'
+          jsDocAst: { type: 'NAME', name: 'string' }
         },
         {
-          type: 'param',
-          name: '[opts.height]',
+          tagType: 'param',
+          tagValue: '{string}  [opts.height=100] - Persons height',
+          tagFull: '@param  {string}  [opts.height=100] - Persons height',
+          name: 'opts.height',
+          nameRaw: '[opts.height=100]',
           description: 'Persons height',
+          defaultValue: '100',
+          type: 'string',
           types: [ 'string' ],
-          typesDescription: 'string',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'string' },
-          string: '{string}  [opts.height] - Persons height',
-          descriptionHtml: '<p>Persons height</p>'
+          jsDocAst: { type: 'NAME', name: 'string' }
         },
         {
-          type: 'param',
-          name: '[opts.isRad]',
+          tagType: 'param',
+          tagValue: '{boolean} [opts.isRad] - Rad checker',
+          tagFull: '@param  {boolean} [opts.isRad] - Rad checker',
+          name: 'opts.isRad',
+          nameRaw: '[opts.isRad]',
           description: 'Rad checker',
+          type: 'boolean',
           types: [ 'boolean' ],
-          typesDescription: 'boolean',
           optional: true,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'boolean' },
-          string: '{boolean} [opts.isRad] - Rad checker',
-          descriptionHtml: '<p>Rad checker</p>'
+          jsDocAst: { type: 'NAME', name: 'boolean' }
         },
         {
-          type: 'return',
+          tagType: 'settings',
+          tagValue: 'foo=bar baz=yippe',
+          tagFull: '@settings foo=bar baz=yippe',
+          name: '',
+          nameRaw: '',
+          description: '',
+          html: '<p>foo=bar baz=yippe</p>'
+        },
+        {
+          tagType: 'return',
+          tagValue: '{boolean} - React component',
+          tagFull: '@return {boolean} - React component',
+          description: 'React component',
+          type: 'boolean',
           types: [ 'boolean' ],
-          typesDescription: 'boolean',
           optional: false,
           nullable: false,
           nonNullable: false,
           variable: false,
-          jsDocAst: { type: 'NAME', name: 'boolean' },
-          description: 'React component',
-          string: '{boolean} - React component',
-          descriptionHtml: '<p>React component</p>'
+          jsDocAst: { type: 'NAME', name: 'boolean' }
         }
       ],
       description: {
-        raw: 'Checks if person is cool',
-        full: '<p>Checks if person is cool</p>',
-        summary: '<p>Checks if person is cool</p>',
-        body: ''
+        summary: 'Checks if person is cool',
+        body: 'This is a great function',
+        text: 'Checks if person is cool\n\nThis is a great function',
+        html: '<p>Checks if person is cool</p>\n<p>This is a great function</p>',
+        summaryHtml: '<p>Checks if person is cool</p>',
+        bodyHtml: '<p>This is a great function</p>'
       },
       isPrivate: false,
       isConstructor: false,
@@ -132,12 +150,12 @@ export default function isCool(name, opts = {}) {
       isEvent: false,
       ignore: false,
       line: 2,
-      codeStart: 11,
+      codeStart: 15,
       code: 'export default function isCool(name, opts = {}) {\n' +
         '  if(opts.isRad) return true\n' +
         '  return false\n' +
         '}',
-      ctx: { type: 'function', name: 'isCool', string: 'isCool()' }
+      ctx: { type: 'function', name: 'isCool', text: 'isCool()' }
     }
   ], 'comments match')
 })
