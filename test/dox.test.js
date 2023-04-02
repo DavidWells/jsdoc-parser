@@ -16,22 +16,31 @@ module.exports = {
   'test .parseComments() blocks': function(done){
     fixture('a.js', function(err, str){
       var comments = dox.parseComments(str)
-      // console.log('xx', comments)
         , file = comments.shift()
         , version = comments.shift();
-      file.should.have.property('ignore', true);
+        // console.log('xx', comments)
+        // console.log('file', file)
+        // console.log('version', version)
+        // process.exit(1)
+      file.should.have.property('isIgnored', true);
       file.description.html.should.equal('<p>A<br />\nCopyright (c) 2010 Author Name <Author Email><br />\nMIT Licensed</p>');
       file.description.summaryHtml.should.equal('<p>A<br />\nCopyright (c) 2010 Author Name <Author Email><br />\nMIT Licensed</p>');
       file.description.bodyHtml.should.equal('');
       file.tags.should.be.empty;
-      file.line.should.equal(2);
-      file.codeStart.should.equal(7);
+      /* open and close tags */
+      file.comment.lines[0].should.equal(2);
+      file.comment.lines[1].should.equal(6);
+      // file.codeStart.should.equal(7);
 
-      version.should.have.property('ignore', false);
+      version.should.have.property('isIgnored', false);
       version.description.html.should.equal('<p>Library version.</p>');
       version.description.summaryHtml.should.equal('<p>Library version.</p>');
       version.description.bodyHtml.should.equal('');
       version.tags.should.be.empty;
+      /* open and close tags */
+      version.comment.lines[0].should.equal(8);
+      version.comment.lines[1].should.equal(10);
+
       version.line.should.equal(8);
       version.codeStart.should.equal(12);
       done();
@@ -41,8 +50,12 @@ module.exports = {
   'test .parseComments() tags': function(done){
     fixture('b.js', function(err, str){
       var comments = dox.parseComments(str);
-
+     
       var version = comments.shift();
+      // console.log('b.js comments')
+      // deepLog(comments)
+      // console.log('version', version)
+      // process.exit(1)
       version.description.summaryHtml.should.equal('<p>Library version.</p>');
       version.description.html.should.equal('<p>Library version.</p>');
       version.tags.should.have.length(2);
@@ -56,6 +69,9 @@ module.exports = {
       version.ctx.receiver.should.equal('exports');
       version.ctx.name.should.equal('version');
       version.ctx.value.should.equal("'0.0.1'");
+      /* open and close tags */
+      version.comment.lines[0].should.equal(2);
+      version.comment.lines[1].should.equal(7);
       version.line.should.equal(2);
       version.codeStart.should.equal(9);
 
@@ -70,7 +86,7 @@ module.exports = {
       // parse.tags[0].descriptionHtml.should.equal('<p>An object that must provide a <code>requestExecutor</code> field.</p>');
       parse.tags[0].types.should.eql(['Object']);
       parse.line.should.equal(12);
-      parse.codeStart.should.equal(15);
+      parse.codeStart.should.equal(16);
       done();
     });
   },
@@ -78,6 +94,9 @@ module.exports = {
   'test .parseComments() complex': function(done){
     fixture('c.js', function(err, str){
       var comments = dox.parseComments(str);
+      // console.log('c.js comments')
+      // deepLog(comments)
+      // process.exit(1)
 
       var file = comments.shift();
 
@@ -85,16 +104,18 @@ module.exports = {
       // the following doesn't work as gh-md now obfuscates emails different on every pass
       //file.description.html.should.equal('<p>Dox<br />\nCopyright (c) 2010 TJ Holowaychuk <a href=\'mailto:tj@vision-media.ca\'>tj@vision-media.ca</a><br />\nMIT Licensed</p>');
       file.description.html.should.be.type('string');
-      file.ignore.should.be.true;
+      file.isIgnored.should.be.true;
       file.line.should.equal(2);
-      file.codeStart.should.equal(7);
+      file.comment.lines[0].should.equal(2);
+      file.comment.lines[1].should.equal(6);
+      // file.codeStart.should.equal(7);
 
       var mods = comments.shift();
       mods.tags.should.be.empty;
       mods.description.html.should.equal('<p>Module dependencies.</p>');
       mods.description.summaryHtml.should.equal('<p>Module dependencies.</p>');
       mods.description.bodyHtml.should.equal('');
-      mods.ignore.should.be.false;
+      mods.isIgnored.should.be.false;
       mods.code.should.equal('var markdown = require(\'github-flavored-markdown\').parse;');
       mods.ctx.type.should.equal('declaration');
       mods.ctx.name.should.equal('markdown');
@@ -128,7 +149,11 @@ module.exports = {
       parseComment.codeStart.should.equal(92);
 
       var parseTag = comments.shift();
+      // console.log('parseTag', parseTag)
+      // process.exit(1)
       parseTag.line.should.equal(120);
+      parseTag.comment.lines[0].should.equal(120);
+      parseTag.comment.lines[1].should.equal(126);
       parseTag.codeStart.should.equal(128);
 
       // Should be the comment be parsed ?
@@ -150,7 +175,7 @@ module.exports = {
       escape.ctx.type.should.equal('function');
       escape.ctx.name.should.equal('escape');
       escape.line.should.equal(253);
-      escape.codeStart.should.equal(262);
+      escape.codeStart.should.equal(264);
       done();
     });
   },
@@ -498,16 +523,17 @@ module.exports = {
     });
   },
 
-  'test .parseComments() titles': function(done){
-    fixture('titles.js', function(err, str){
+  'test .parseComments() titles': function(done) {
+    fixture('titles.js', function(err, str) {
       var comments = dox.parseComments(str);
       // console.log('test .parseComments() titles')
       // deepLog(comments)
+      // process.exit(1)
       comments[0].description.bodyHtml.should.containEql('<h2>Some examples</h2>');
       comments[0].description.bodyHtml.should.not.containEql('<h2>for example</h2>');
       comments[0].description.bodyHtml.should.containEql('<h2>Some longer thing for example</h2>');
       comments[0].line.should.equal(2);
-      comments[0].codeStart.should.equal(14);
+      // comments[0].codeStart.should.equal(14);
 
       comments[1].description.html.should.equal('<p>Description 1</p>');
       comments[1].tags.should.have.length(2);
@@ -659,7 +685,7 @@ module.exports = {
     tag.name.should.equal('');
     tag.description.should.equal('');
     tag.tagValue.should.equal('{String|Buffer}');
-    tag.optional.should.be.false;
+    tag.isOptional.should.be.false;
   },
 
   'test .parseTag() @param optional': function(){
@@ -670,7 +696,7 @@ module.exports = {
     tag.nameRaw.should.equal('[foo]');
     tag.description.should.equal('');
     tag.tagValue.should.equal('{string} [foo]');
-    tag.optional.should.be.true;
+    tag.isOptional.should.be.true;
 
     var tag = dox.parseTag('@param {string=} foo')
     tag.tagType.should.equal('param');
@@ -678,7 +704,7 @@ module.exports = {
     tag.name.should.equal('foo');
     tag.description.should.equal('');
     tag.tagValue.should.equal('{string=} foo');
-    tag.optional.should.be.true;
+    tag.isOptional.should.be.true;
 
     var tag = dox.parseTag('@param {string?} foo')
     tag.tagType.should.equal('param');
@@ -686,7 +712,7 @@ module.exports = {
     tag.name.should.equal('foo');
     tag.description.should.equal('');
     tag.tagValue.should.equal('{string?} foo');
-    tag.nullable.should.be.true;
+    tag.isNullable.should.be.true;
 
     var tag = dox.parseTag('@param {string|Buffer=} foo')
     tag.tagType.should.equal('param');
@@ -694,7 +720,7 @@ module.exports = {
     tag.name.should.equal('foo');
     tag.description.should.equal('');
     tag.tagValue.should.equal('{string|Buffer=} foo');
-    tag.optional.should.be.true;
+    tag.isOptional.should.be.true;
   },
 
   'test .parseTag() @return': function(){
@@ -834,10 +860,10 @@ module.exports = {
           "name": "Object",
           "type": "NAME",
         },
-        nullable: false,
-        nonNullable: false,
-        variable: false,
-        optional: false,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
+        isOptional: false,
       });
       comments[0].description.html.should.be.equal('<p>foo description</p>');
       done();

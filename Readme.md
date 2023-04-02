@@ -616,6 +616,7 @@ function play(song) {
 
 ## Alternative libraries
 
+- https://github.com/metarhia/metadoc/blob/master/lib/introspector.js#L284
 - https://github.com/jsdoc2md/jsdoc-to-markdown
 - https://github.com/kippisone/docblock
 - https://github.com/fkling/docblock-parser allows for custom patterns

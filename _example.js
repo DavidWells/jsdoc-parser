@@ -48,9 +48,10 @@ export default function Button(props = {}) {
 const codeThree = `
 import React from 'react'
 
-/**
+/*!
  * Renders a <ButtonImport /> component with imported types
  * @param {string} [whatever='foo'] - string porp;
+ * @param {string} nooooooo='foo' - string porp;
  * @param { import("./_types.ts").TinyProps } [props] - optional props
  * @param { import("./_types.ts").Lol } other - lol nice
  * @param { import("./_types.ts").Chill } isChill - the coolest

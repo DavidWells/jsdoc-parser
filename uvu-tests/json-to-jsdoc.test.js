@@ -37,7 +37,9 @@ test('JSON to JSDOC', async () => {
   * @property {Boolean} funky.whatever
   */`
   const one = convert(obj)
+  /*
   console.log('one', one)
+  /** */
   equal(one, jsdocOne, 'makes jsdocOne')
 
   // const objTwo = {
@@ -63,7 +65,9 @@ test('simple object', async () => {
  * @property {Number} userId
  */`
   const one = convert(obj)
+  /*
   console.log('one', one)
+  /** */
   equal(one, jsdocOne, 'makes jsdocOne')
 })
 
@@ -80,7 +84,9 @@ test.skip('simple array', async () => {
  * @property {Number} 0.userId
  */`
   const one = convert(obj)
+  /*
   console.log('one', one)
+  /** */
   equal(one, jsdocOne, 'makes jsdocOne')
   // SHOULD BE THIS
   // /**
@@ -132,7 +138,9 @@ test('JSON to JSDOC DEEP', async () => {
  * @property·{Number}·deep.fun
  */`
   const one = convert(obj)
+  /*
   console.log('one', one)
+  /** */
   equal(one, jsdocOne, 'makes jsdocOne')
 })
 

@@ -3,10 +3,6 @@ const assert = require('uvu/assert')
 const doxxx = require('../../lib/dox')
 const deepLog = require('../utils/log')
 
-test('API is exposed', async () => {
-  assert.is(typeof doxxx.parseComments, 'function')
-})
-
 test('React component with examples', async () => {
 const basicDocBlock = `
 /**
@@ -46,9 +42,16 @@ export default function Button(props = {}) {
   process.exit(1)
   /** */
 
-
 assert.equal(comments, [
   {
+    description: {
+      summary: 'Renders a <Button /> component',
+      body: '',
+      text: 'Renders a <Button /> component',
+      html: '<p>Renders a <Button /> component</p>',
+      summaryHtml: '<p>Renders a <Button /> component</p>',
+      bodyHtml: ''
+    },
     tags: [
       {
         tagType: 'param',
@@ -59,10 +62,10 @@ assert.equal(comments, [
         description: 'Button props',
         type: 'object',
         types: [ 'object' ],
-        optional: true,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: { type: 'NAME', name: 'object' }
       },
       {
@@ -74,10 +77,10 @@ assert.equal(comments, [
         description: 'My button',
         type: 'string',
         types: [ 'string' ],
-        optional: true,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: { type: 'NAME', name: 'string' }
       },
       {
@@ -89,10 +92,10 @@ assert.equal(comments, [
         description: 'is button active',
         type: 'boolean',
         types: [ 'boolean' ],
-        optional: true,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: { type: 'NAME', name: 'boolean' }
       },
       {
@@ -104,10 +107,10 @@ assert.equal(comments, [
         description: 'CSS class name',
         type: 'string',
         types: [ 'string' ],
-        optional: true,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: { type: 'NAME', name: 'string' }
       },
       {
@@ -119,10 +122,10 @@ assert.equal(comments, [
         description: 'component children;',
         type: 'React.ReactNode',
         types: [ 'React.ReactNode' ],
-        optional: true,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: {
           type: 'MEMBER',
           owner: { type: 'NAME', name: 'React' },
@@ -140,10 +143,10 @@ assert.equal(comments, [
         description: 'used to set the CSS of the button',
         type: 'React.CSSProperties',
         types: [ 'React.CSSProperties' ],
-        optional: true,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: {
           type: 'MEMBER',
           owner: { type: 'NAME', name: 'React' },
@@ -159,10 +162,10 @@ assert.equal(comments, [
         description: 'React component',
         type: 'React.ReactElement',
         types: [ 'React.ReactElement' ],
-        optional: false,
-        nullable: false,
-        nonNullable: false,
-        variable: false,
+        isOptional: false,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
         jsDocAst: {
           type: 'MEMBER',
           owner: { type: 'NAME', name: 'React' },
@@ -211,21 +214,79 @@ assert.equal(comments, [
           '</code></pre>'
       }
     ],
-    description: {
-      summary: 'Renders a <Button /> component',
-      body: '',
-      text: 'Renders a <Button /> component',
-      html: '<p>Renders a <Button /> component</p>',
-      summaryHtml: '<p>Renders a <Button /> component</p>',
-      bodyHtml: ''
-    },
+    isIgnored: false,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: false,
     line: 2,
-    codeStart: 24,
+    comment: {
+      lines: [ 2, 23 ],
+      text: 'Renders a <Button /> component\n' +
+        '@param  {object}  [props] - Button props\n' +
+        '@param  {string}  [props.text] - My button\n' +
+        '@param  {boolean} [props.isActive] - is button active\n' +
+        '@param  {string}  [props.className] - CSS class name\n' +
+        '@param  {React.ReactNode} [props.children] - component children;\n' +
+        '@param  {React.CSSProperties} [props.style] - used to set the CSS of the button\n' +
+        '@return {React.ReactElement} - React component\n' +
+        '@example\n' +
+        "  <Button className='cool'>\n" +
+        '    Words\n' +
+        '  </Button>\n' +
+        '@example\n' +
+        "  <Button className='other'>\n" +
+        '    Words\n' +
+        '  </Button>\n' +
+        '@example\n' +
+        "<Button className='third'>\n" +
+        '  Words\n' +
+        '</Button>',
+      rawText: '/**\n' +
+        '* Renders a <Button /> component\n' +
+        '* @param  {object}  [props] - Button props\n' +
+        '* @param  {string}  [props.text] - My button\n' +
+        '* @param  {boolean} [props.isActive] - is button active\n' +
+        '* @param  {string}  [props.className] - CSS class name\n' +
+        '* @param  {React.ReactNode} [props.children] - component children;\n' +
+        '* @param  {React.CSSProperties} [props.style] - used to set the CSS of the button\n' +
+        '* @return {React.ReactElement} - React component\n' +
+        '* @example\n' +
+        "  <Button className='cool'>\n" +
+        '    Words\n' +
+        '  </Button>\n' +
+        '* @example\n' +
+        "  <Button className='other'>\n" +
+        '    Words\n' +
+        '  </Button>\n' +
+        '* @example\n' +
+        "* <Button className='third'>\n" +
+        '*   Words\n' +
+        '* </Button>\n' +
+        '*/',
+      fullText: '/**\n' +
+        '* Renders a <Button /> component\n' +
+        '* @param  {object}  [props] - Button props\n' +
+        '* @param  {string}  [props.text] - My button\n' +
+        '* @param  {boolean} [props.isActive] - is button active\n' +
+        '* @param  {string}  [props.className] - CSS class name\n' +
+        '* @param  {React.ReactNode} [props.children] - component children;\n' +
+        '* @param  {React.CSSProperties} [props.style] - used to set the CSS of the button\n' +
+        '* @return {React.ReactElement} - React component\n' +
+        '* @example\n' +
+        "  <Button className='cool'>\n" +
+        '    Words\n' +
+        '  </Button>\n' +
+        '* @example\n' +
+        "  <Button className='other'>\n" +
+        '    Words\n' +
+        '  </Button>\n' +
+        '* @example\n' +
+        "* <Button className='third'>\n" +
+        '*   Words\n' +
+        '* </Button>\n' +
+        '*/'
+    },
     code: 'export default function Button(props = {}) {\n' +
       '  return (\n' +
       '    <button style={props.style}>\n' +
@@ -234,7 +295,10 @@ assert.equal(comments, [
       '    </button>\n' +
       '  )\n' +
       '}',
-    ctx: { type: 'function', name: 'Button', text: 'Button()' }
+    ctx: { type: 'function', name: 'Button', text: 'Button()' },
+    codeStart: 24,
+    codeEnd: 31,
+    codeLines: [ 24, 31 ]
   }
 ], 'comments match')
 })

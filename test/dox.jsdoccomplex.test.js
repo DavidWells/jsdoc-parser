@@ -21,7 +21,7 @@ module.exports = {
         , nullableParam = comments.shift()
         , nonNullableParam = comments.shift()
         , variableParam = comments.shift()
-        // , optionalVariableNullableParam = comments.shift();
+        , optionalVariableNullableParam = comments.shift();
 
       /////////////////////////////////////
       // complexTypeParamAndReturn
@@ -97,38 +97,39 @@ module.exports = {
       // optionalParam
       /////////////////////////////////////
       optionalParam.tags.should.with.lengthOf(1);
-      optionalParam.tags[0].optional.should.be.true;
+      optionalParam.tags[0].isOptional.should.be.true;
       optionalParam.tags[0].tagValue.should.equal('{number=} a');
 
       /////////////////////////////////////
       // nullableParam
       /////////////////////////////////////
       nullableParam.tags.should.with.lengthOf(1);
-      nullableParam.tags[0].nullable.should.be.true;
+      nullableParam.tags[0].isNullable.should.be.true;
       nullableParam.tags[0].tagValue.should.equal('{?number} a');
 
       /////////////////////////////////////
       // nonNullableParam
       /////////////////////////////////////
       nonNullableParam.tags.should.with.lengthOf(1);
-      nonNullableParam.tags[0].nonNullable.should.be.true;
+      nonNullableParam.tags[0].isNonNullable.should.be.true;
       nonNullableParam.tags[0].tagValue.should.equal('{!number} a');
 
       /////////////////////////////////////
       // variableParam
       /////////////////////////////////////
       variableParam.tags.should.with.lengthOf(1);
-      variableParam.tags[0].variable.should.be.true;
+      variableParam.tags[0].isVariadic.should.be.true;
       variableParam.tags[0].tagValue.should.equal('{...number} a');
 
       /////////////////////////////////////
       // optionalVariableNullableParam
       /////////////////////////////////////
-      // optionalVariableNullableParam.tags.should.with.lengthOf(1);
-      // optionalVariableNullableParam.tags[0].optional.should.be.true;
-      // optionalVariableNullableParam.tags[0].variable.should.be.true;
-      // optionalVariableNullableParam.tags[0].nullable.should.be.true;
-      // optionalVariableNullableParam.tags[0].tagValue.should.equal('{?...number=} a');
+      // console.log('optionalVariableNullableParam', optionalVariableNullableParam)
+      optionalVariableNullableParam.tags.should.with.lengthOf(1);
+      optionalVariableNullableParam.tags[0].isOptional.should.be.true;
+      optionalVariableNullableParam.tags[0].isVariadic.should.be.true;
+      optionalVariableNullableParam.tags[0].isNullable.should.be.true;
+      optionalVariableNullableParam.tags[0].tagValue.should.equal('{?...number=} a - foobar');
 
       done();
     });

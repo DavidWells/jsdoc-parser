@@ -1,56 +1,4 @@
-/**
- *
- * @param {number|string|{name:string,age:number}} a
- * @param {number|{name:string,age:number}|Array} a
- * @returns {{name:string,age:number}}
- */
-function complexTypeParamAndReturn(a, b) {
-  return {
-    name: 'Test',
-    age: 30
-  }
-}
-
-/**
- *
- * @param {number | string | {length: number, type: {name: {first: string, last: string}, id: number | string}}} a Description of param
- */
-function nestedComplexTypeParam(a) {
-
-}
-
-/**
- *
- * @param {number=} a
- */
-function optionalParam(a) {
-
-}
-
-/**
- *
- * @param {?number} a
- */
-function nullableParam(a) {
-
-}
-
-/**
- *
- * @param {!number} a
- */
-function nonNullableParam(a) {
-
-}
-
-/**
- *
- * @param {...number} a
- */
-function variableParam(a) {
-
-}
-
+const dox = require('../../lib/dox')
 
 // @param {?...number=} a ............. causes error...
 // /path/repos/dox/node_modules/jsdoctypeparser/peg_lib/jsdoctype-permissive.js:7504
@@ -69,6 +17,7 @@ function variableParam(a) {
 //     at Module._compile (internal/modules/cjs/loader.js:777:30) {
 //   message: 'Expected [ \\t], [\\n], [\\r], or end of input but "n" found.',
 
+const code = `
 /*
  *
  * @param {?...number=} a - foobar
@@ -76,3 +25,9 @@ function variableParam(a) {
 function optionalVariableNullableParam(a) {
 
 }
+`
+
+var obj = dox.parseComments(code);
+const { inspect } = require('util')
+console.log('result')
+console.log(inspect(obj, {showHidden: false, depth: null}))
