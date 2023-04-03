@@ -1,4 +1,4 @@
-var dox = require('../')
+const dox = require('../../lib/dox')
 
 const code = `
 /**
@@ -58,4 +58,5 @@ function variableParam(a) {
 var obj = dox.parseComments(code);
 const { inspect } = require('util')
 console.log('result')
-console.log(inspect(obj[3], {showHidden: false, depth: null}))
+// console.log(inspect(obj[3], {showHidden: false, depth: null}))
+console.log(inspect(obj, {showHidden: false, depth: null}))

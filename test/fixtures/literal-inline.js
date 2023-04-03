@@ -1,4 +1,9 @@
 
+
+function doAnything() {
+	return 'x'
+}
+
 /**
  * Targeted literal
  * @type {Object}
@@ -35,4 +40,3 @@ var Target = {
 	result: doAnything()
 
 };
-

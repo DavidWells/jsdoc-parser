@@ -4,7 +4,7 @@
  * @throws An error message.
  */
 function crashMe() {
-    throw "Bang!";
+  throw "Bang!";
 }
 
 /**
@@ -13,8 +13,8 @@ function crashMe() {
  * @throws {TypeError} Invalid argument.
  */
 function validateUserInput(input) {
-    if (typeof input !== "string")) {
-        throw new TypeError("Input is not a string");
-    }
-    return true;
+  if (typeof input !== "string") {
+    throw new TypeError("Input is not a string");
+  }
+  return true;
 }

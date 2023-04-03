@@ -69,10 +69,10 @@ function variableParam(a) {
 //     at Module._compile (internal/modules/cjs/loader.js:777:30) {
 //   message: 'Expected [ \\t], [\\n], [\\r], or end of input but "n" found.',
 
-// /*
-//  *
-//  * @param {?...number=} a
-//  */
-// function optionalVariableNullableParam(a) {
+/*
+ *
+ * @param {?...number=} a - foobar
+ */
+function optionalVariableNullableParam(a) {
 
-// }
+}

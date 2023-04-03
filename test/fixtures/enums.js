@@ -1,20 +1,22 @@
+const FSM = {}
+
 /**
  * FSM states.
  *
- * @enum
+ * @enum {number}
  */
 FSM.prototype.states = {
-    STOPPED     : 0,
-    STARTING    : 1,
-    WORKING     : 2,
-    STOPPING    : 3
+  STOPPED     : 0,
+  STARTING    : 1,
+  WORKING     : 2,
+  STOPPING    : 3
 };
 
 
 /**
  * Colors.
  *
- * @enum
+ * @enum {string}
  */
 exports.RED     = "#f00";
 exports.GREEN   = "#0f0";

@@ -28,15 +28,21 @@
     "dox": "./bin/dox"
   },
   "scripts": {
-    "test": "make test"
+    "test": "npm run uvu && npm run test:manual && make test",
+    "test:manual": "uvu test/manual '.test.([mc]js|[jt]sx?)$'",
+    "uvu": "uvu uvu-tests -r esm"
   },
   "dependencies": {
     "commander": "~2.20.0",
     "jsdoctypeparser": "^9.0.0",
-    "markdown-it": "~9.0.1"
+    "markdown-it": "~9.0.1",
+    "typescript": "^4.3.5"
   },
   "devDependencies": {
     "mocha": "~6.2.0",
-    "should": "~13.2.3"
+    "parse-imports": "^1.1.0",
+    "should": "~13.2.3",
+    "uvu": "^0.5.3",
+    "esm": "^3.2.25"
   }
 }
