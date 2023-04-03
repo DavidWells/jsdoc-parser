@@ -194,7 +194,6 @@ function testing(obj) {
 
 }
 
-testing()
 
 function equal(one, two, details = '') {
   assert.equal(trimTrailingSpace(one), trimTrailingSpace(two), details)

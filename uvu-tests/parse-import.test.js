@@ -11,6 +11,13 @@ test('API is exposed', async () => {
   assert.is(typeof getImports, 'function')
 })
 
+
+const importsExample = `
+import { test } from 'uvu'
+import * as assert from 'uvu/assert'
+import { getRequires, getTypeImports, getImports } from '../lib/utils/get-imports'
+  `
+
 test('getRequires', async () => {
   const one = `
 const path = require('path')
@@ -62,14 +69,41 @@ const ts = require('typescript')
     }
   ], 'valueTwo')
 
-  const three = `
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
-import { getRequires, getTypeImports, getImports } from '../lib/utils/get-imports'
-  `
-  const valueThree = getRequires(three)
+  const valueThree = getRequires(importsExample)
   // console.log('valueThree', valueThree)
   assert.equal(valueThree, [], 'valueThree')
+})
+
+
+test('getImports', async () => {
+  const foundValues = getImports(importsExample)
+  // console.log('foundValues', foundValues)
+  assert.equal(foundValues, [
+    {
+      line: "import { test } from 'uvu'",
+      names: '{ test }',
+      from: 'uvu',
+      index: 1,
+      isImport: true,
+      isRelative: false
+    },
+    {
+      line: "import * as assert from 'uvu/assert'",
+      names: '* as assert',
+      from: 'uvu/assert',
+      index: 28,
+      isImport: true,
+      isRelative: false
+    },
+    {
+      line: "import { getRequires, getTypeImports, getImports } from '../lib/utils/get-imports'",
+      names: '{ getRequires, getTypeImports, getImports }',
+      from: '../lib/utils/get-imports',
+      index: 65,
+      isImport: true,
+      isRelative: true
+    }
+  ], 'getImports')
 })
 
 test.run()

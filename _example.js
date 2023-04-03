@@ -20,6 +20,12 @@ function complexTypeParamAndReturn(a, b) {
 }
 `
 
+/*
+deepLog(doxxx.parseComments(code))
+// process.exit(1)
+/** */
+
+
 const codeTwo = `
 /**
 * Renders a <Button /> component
@@ -44,6 +50,10 @@ export default function Button(props = {}) {
   )
 }
 `
+/*
+deepLog(doxxx.parseComments(codeTwo))
+process.exit(1)
+/** */
 
 const codeThree = `
 import React from 'react'
@@ -52,9 +62,9 @@ import React from 'react'
  * Renders a <ButtonImport /> component with imported types
  * @param {string} [whatever='foo'] - string porp;
  * @param {string} nooooooo='foo' - string porp;
- * @param { import("./_types.ts").TinyProps } [props] - optional props
- * @param { import("./_types.ts").Lol } other - lol nice
- * @param { import("./_types.ts").Chill } isChill - the coolest
+ * @param { import("./_test-types.ts").TinyProps } [props] - optional props
+ * @param { import("./_test-types.ts").Lol } other - lol nice
+ * @param { import("./_test-types.ts").Chill } isChill - the coolest
  * @return {React.ReactElement} - React component
  */
 export default function ButtonImport(props) {
@@ -78,6 +88,11 @@ function complexTypeParamAndReturn(a, b) {
   }
 }
 `
+
+/*
+deepLog(doxxx.parseComments(codeThree))
+// process.exit(1)
+/** */
 
 const codeFour = `
 import React from 'react'
@@ -103,4 +118,7 @@ export default function ButtonImport(props) {
 }
 `
 
-deepLog(doxxx.parseComments(codeThree))
+//*
+deepLog(doxxx.parseComments(codeFour))
+// process.exit(1)
+/** */
