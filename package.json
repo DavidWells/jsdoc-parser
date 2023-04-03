@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "David Wells <hello@davidwells.io>",
   "contributors": [
+    "David Wells <hello@davidwells.io>",
     "TJ Holowaychuk <tj@vision-media.ca>",
     "Jarvis Badgley <chiper@chipersoft.com>",
     "Arseny Zarechnev <me@evindor.com>",
@@ -30,7 +31,11 @@
   "scripts": {
     "test": "npm run uvu && npm run test:manual && make test",
     "test:manual": "uvu test/manual '.test.([mc]js|[jt]sx?)$'",
-    "uvu": "uvu uvu-tests -r esm"
+    "uvu": "uvu uvu-tests -r esm",
+    "publish": "git push origin && git push origin --tags",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
   },
   "dependencies": {
     "commander": "~2.20.0",
