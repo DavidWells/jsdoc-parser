@@ -28,7 +28,7 @@
     "dox": "./bin/dox"
   },
   "scripts": {
-    "test": "npm run uvu && make test",
+    "test": "npm run uvu && npm run x && make test",
     "x": "uvu test/manual '.test.([mc]js|[jt]sx?)$'",
     "uvu": "uvu uvu-tests -r esm"
   },

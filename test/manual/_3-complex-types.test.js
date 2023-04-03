@@ -634,8 +634,8 @@ assert.equal(comments, [
     comment: {
       lines: [ 55, 57 ],
       text: '@param {?...number=} a - foobar',
-      rawText: '/\n *\n * @param {?...number=} a - foobar\n */',
-      fullText: '/\n *\n * @param {?...number=} a - foobar\n */'
+      rawText: '/*\n *\n * @param {?...number=} a - foobar\n */',
+      fullText: '/*\n *\n * @param {?...number=} a - foobar\n */'
     },
     code: 'function optionalVariableNullableParam(a) {\n\n}',
     ctx: {

@@ -1,12 +1,135 @@
-const x = `
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+const doxxx = require('../../lib/dox')
+const deepLog = require('../utils/log')
 
-/**   
- * description text 
- * 
- * With a body of junk
- */
 
-`
+test('Match comment ignore', async () => {
+  const one = `
+  /*! ignore */
+  `
+
+  const oneComments = doxxx.parseComments(one)
+
+  assert.is(oneComments.length, 1)
+  assert.is(oneComments[0].tags.length, 0)
+
+  /*
+  deepLog(oneComments)
+  process.exit(1)
+  /** */
+
+  assert.equal(oneComments, [
+    {
+      description: {
+        summary: 'ignore',
+        body: '',
+        text: 'ignore',
+        html: '<p>ignore</p>',
+        summaryHtml: '<p>ignore</p>',
+        bodyHtml: ''
+      },
+      tags: [],
+      isIgnored: true,
+      isPrivate: false,
+      isConstructor: false,
+      isClass: false,
+      isEvent: false,
+      line: 2,
+      comment: {
+        lines: [ 2, 2 ],
+        text: 'ignore',
+        rawText: '/*! ignore */',
+        fullText: '/*! ignore */'
+      }
+    }
+  ], 'ignore')
+
+  const two = `
+  /*!
+  * ignore
+  */
+  `
+  const twoComments = doxxx.parseComments(two)
+
+  assert.is(twoComments.length, 1)
+  assert.is(twoComments[0].tags.length, 0)
+  /*
+  deepLog(twoComments)
+  process.exit(1)
+  /** */
+assert.equal(twoComments, [
+  {
+    description: {
+      summary: 'ignore',
+      body: '',
+      text: 'ignore',
+      html: '<p>ignore</p>',
+      summaryHtml: '<p>ignore</p>',
+      bodyHtml: ''
+    },
+    tags: [],
+    isIgnored: true,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 2,
+    comment: {
+      lines: [ 2, 4 ],
+      text: 'ignore',
+      rawText: '/*!\n  * ignore\n  */',
+      fullText: '/*!\n  * ignore\n  */'
+    }
+  }
+], 'ignore two')
+
+})
+
+test('Match comment with no tags', async () => {
+  const comments = doxxx.parseComments(`
+
+  /**   
+   * description text 
+   * 
+   * With a body of junk
+   */
+  
+  `)
+  /*
+  deepLog(comments)
+  process.exit(1)
+  /** */
+
+  assert.is(comments.length, 1)
+  assert.is(comments[0].tags.length, 0)
+assert.equal(comments, [
+  {
+    description: {
+      summary: 'description text ',
+      body: 'With a body of junk',
+      text: 'description text \n\nWith a body of junk',
+      html: '<p>description text</p>\n<p>With a body of junk</p>',
+      summaryHtml: '<p>description text</p>',
+      bodyHtml: '<p>With a body of junk</p>'
+    },
+    tags: [],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 3,
+    comment: {
+      lines: [ 3, 8 ],
+      text: 'description text \n\nWith a body of junk',
+      rawText: '/**   \n   * description text \n   * \n   * With a body of junk\n   */',
+      fullText: '/**   \n   * description text \n   * \n   * With a body of junk\n   */'
+    }
+  }
+])
+
+})
 
 const variousComments = `
 /** 
@@ -39,22 +162,62 @@ const variousComments = `
  * ignore
  */
 
-/* ignore */
+/* ignorex */
+
 /*
- * ignore
+ * xignore
  */
 `
 
-const { test } = require('uvu')
-const assert = require('uvu/assert')
-const doxxx = require('../../lib/dox')
-const deepLog = require('../utils/log')
+test.only('Varied xxx', async () => {
+  const comments = doxxx.parseComments(`
+/*
+ * ignore
+ */
+`, {
+  // skipSingleStar: true
+})
+  /*
+  deepLog(comments)
+  console.log('comments.length', comments.length)
+  process.exit(1)
+  /** */
+assert.equal(comments, [
+  {
+    description: {
+      summary: 'ignore',
+      body: '',
+      text: 'ignore',
+      html: '<p>ignore</p>',
+      summaryHtml: '<p>ignore</p>',
+      bodyHtml: ''
+    },
+    tags: [],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 2,
+    comment: {
+      lines: [ 2, 3 ],
+      text: 'ignore',
+      rawText: '/*\n * ignore\n */',
+      fullText: '/*\n * ignore\n */'
+    }
+  }
+])
+
+})
 
 test('Varied comments', async () => {
-  const comments = doxxx.parseComments(x)
+  const comments = doxxx.parseComments(variousComments, {
+    excludeIgnored: true,
+    //skipSingleStar: true
+  })
   //*
   deepLog(comments)
- 
+  console.log('comments.length', comments.length)
   process.exit(1)
   /** */
   assert.is(comments.length, 12)
@@ -62,7 +225,6 @@ test('Varied comments', async () => {
 
 assert.equal(comments, [
   {
-    tags: [],
     description: {
       summary: 'description text',
       body: '',
@@ -71,15 +233,29 @@ assert.equal(comments, [
       summaryHtml: '<p>description text</p>',
       bodyHtml: ''
     },
+    tags: [],
+    isIgnored: false,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: false,
     line: 2,
-    codeStart: 3
+    comment: {
+      lines: [ 2, 4 ],
+      text: 'description text',
+      rawText: '/** \n * description text \n */',
+      fullText: '/** \n * description text \n */'
+    }
   },
   {
+    description: {
+      summary: 'description',
+      body: '',
+      text: 'description',
+      html: '<p>description</p>',
+      summaryHtml: '<p>description</p>',
+      bodyHtml: ''
+    },
     tags: [
       {
         tagType: 'module',
@@ -127,23 +303,47 @@ assert.equal(comments, [
         html: '<p>name</p>'
       }
     ],
-    description: {
-      summary: 'description',
-      body: '',
-      text: 'description',
-      html: '<p>description</p>',
-      summaryHtml: '<p>description</p>',
-      bodyHtml: ''
-    },
+    isIgnored: false,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: false,
-    line: 4,
-    codeStart: 12
+    line: 6,
+    comment: {
+      lines: [ 6, 13 ],
+      text: 'description\n' +
+        '@module {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text\n' +
+        '@module {Type} name description text\n' +
+        '@module [name] - description text\n' +
+        '@module name - description text\n' +
+        '@module name',
+      rawText: '/**\n' +
+        ' * description\n' +
+        ' * @module {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text\n' +
+        ' * @module {Type} name description text\n' +
+        ' * @module [name] - description text\n' +
+        ' * @module name - description text\n' +
+        ' * @module name\n' +
+        ' */',
+      fullText: '/**\n' +
+        ' * description\n' +
+        ' * @module {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text\n' +
+        ' * @module {Type} name description text\n' +
+        ' * @module [name] - description text\n' +
+        ' * @module name - description text\n' +
+        ' * @module name\n' +
+        ' */'
+    }
   },
   {
+    description: {
+      summary: '',
+      body: '',
+      text: '',
+      html: '',
+      summaryHtml: '',
+      bodyHtml: ''
+    },
     tags: [
       {
         tagType: 'extends',
@@ -156,6 +356,20 @@ assert.equal(comments, [
         html: '<p>{Type.&lt;Type,Type(Type,Type.<Type>)&gt;} [name={}] - description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 15,
+    comment: {
+      lines: [ 15, 16 ],
+      text: '@extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text',
+      rawText: '/** @extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text */',
+      fullText: '/** @extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -164,15 +378,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 13,
-    codeStart: 14
-  },
-  {
     tags: [
       {
         tagType: 'extends',
@@ -185,6 +390,20 @@ assert.equal(comments, [
         html: '<p>{Type} name description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 16,
+    comment: {
+      lines: [ 16, 16 ],
+      text: '@extends {Type} name description text',
+      rawText: '/** @extends {Type} name description text */',
+      fullText: '/** @extends {Type} name description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -193,15 +412,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 14,
-    codeStart: 15
-  },
-  {
     tags: [
       {
         tagType: 'extends',
@@ -214,6 +424,20 @@ assert.equal(comments, [
         html: '<p>[name] - description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 17,
+    comment: {
+      lines: [ 17, 17 ],
+      text: '@extends [name] - description text',
+      rawText: '/** @extends [name] - description text */',
+      fullText: '/** @extends [name] - description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -222,15 +446,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 15,
-    codeStart: 16
-  },
-  {
     tags: [
       {
         tagType: 'extends',
@@ -243,6 +458,20 @@ assert.equal(comments, [
         html: '<p>namex - description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 18,
+    comment: {
+      lines: [ 18, 18 ],
+      text: '@extends namex - description text',
+      rawText: '/** @extends namex - description text */',
+      fullText: '/** @extends namex - description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -251,15 +480,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 16,
-    codeStart: 17
-  },
-  {
     tags: [
       {
         tagType: 'extends',
@@ -272,6 +492,20 @@ assert.equal(comments, [
         html: '<p>namey</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 19,
+    comment: {
+      lines: [ 19, 19 ],
+      text: '@extends namey',
+      rawText: '/** @extends namey */',
+      fullText: '/** @extends namey */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -280,15 +514,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 17,
-    codeStart: 18
-  },
-  {
     tags: [
       {
         tagType: 'tag',
@@ -300,6 +525,20 @@ assert.equal(comments, [
         html: '<p>{Type.&lt;Type,Type(Type,Type.<Type>)&gt;} - description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 21,
+    comment: {
+      lines: [ 21, 22 ],
+      text: '@tag {Type.<Type,Type(Type,Type.<Type>)>} - description text',
+      rawText: '/** @tag {Type.<Type,Type(Type,Type.<Type>)>} - description text */',
+      fullText: '/** @tag {Type.<Type,Type(Type,Type.<Type>)>} - description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -308,15 +547,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 19,
-    codeStart: 20
-  },
-  {
     tags: [
       {
         tagType: 'tag',
@@ -328,6 +558,20 @@ assert.equal(comments, [
         html: '<p>{Type} description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 22,
+    comment: {
+      lines: [ 22, 22 ],
+      text: '@tag {Type} description text',
+      rawText: '/** @tag {Type} description text */',
+      fullText: '/** @tag {Type} description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -336,15 +580,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 20,
-    codeStart: 21
-  },
-  {
     tags: [
       {
         tagType: 'tag',
@@ -356,6 +591,20 @@ assert.equal(comments, [
         html: '<ul>\n<li>description text</li>\n</ul>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 23,
+    comment: {
+      lines: [ 23, 23 ],
+      text: '@tag - description text',
+      rawText: '/** @tag - description text */',
+      fullText: '/** @tag - description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -364,15 +613,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 21,
-    codeStart: 22
-  },
-  {
     tags: [
       {
         tagType: 'tag',
@@ -384,6 +624,20 @@ assert.equal(comments, [
         html: '<p>description text</p>'
       }
     ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 24,
+    comment: {
+      lines: [ 24, 24 ],
+      text: '@tag description text',
+      rawText: '/** @tag description text */',
+      fullText: '/** @tag description text */'
+    }
+  },
+  {
     description: {
       summary: '',
       body: '',
@@ -392,15 +646,6 @@ assert.equal(comments, [
       summaryHtml: '',
       bodyHtml: ''
     },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: false,
-    line: 22,
-    codeStart: 23
-  },
-  {
     tags: [
       {
         tagType: 'tag',
@@ -412,42 +657,20 @@ assert.equal(comments, [
         html: ''
       }
     ],
-    description: {
-      summary: '',
-      body: '',
-      text: '',
-      html: '',
-      summaryHtml: '',
-      bodyHtml: ''
-    },
+    isIgnored: false,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: false,
-    line: 23,
-    codeStart: 24
-  },
-  {
-    tags: [],
-    description: {
-      summary: 'ignore',
-      body: '',
-      text: 'ignore',
-      html: '<p>ignore</p>',
-      summaryHtml: '<p>ignore</p>',
-      bodyHtml: ''
-    },
-    isPrivate: false,
-    isConstructor: false,
-    isClass: false,
-    isEvent: false,
-    ignore: true,
     line: 25,
-    codeStart: 26
+    comment: {
+      lines: [ 25, 25 ],
+      text: '@tag',
+      rawText: '/** @tag */',
+      fullText: '/** @tag */'
+    }
   },
   {
-    tags: [],
     description: {
       summary: 'ignore',
       body: '',
@@ -456,16 +679,21 @@ assert.equal(comments, [
       summaryHtml: '<p>ignore</p>',
       bodyHtml: ''
     },
+    tags: [],
+    isIgnored: true,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: true,
-    line: 26,
-    codeStart: 29
+    line: 27,
+    comment: {
+      lines: [ 27, 27 ],
+      text: 'ignore',
+      rawText: '/! ignore */',
+      fullText: '/! ignore */'
+    }
   },
   {
-    tags: [],
     description: {
       summary: 'ignore',
       body: '',
@@ -474,16 +702,21 @@ assert.equal(comments, [
       summaryHtml: '<p>ignore</p>',
       bodyHtml: ''
     },
+    tags: [],
+    isIgnored: true,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: false,
-    line: 30,
-    codeStart: 31
+    line: 28,
+    comment: {
+      lines: [ 28, 29 ],
+      text: 'ignore',
+      rawText: '/!\n * ignore\n */',
+      fullText: '/!\n * ignore\n */'
+    }
   },
   {
-    tags: [],
     description: {
       summary: 'ignore',
       body: '',
@@ -492,13 +725,42 @@ assert.equal(comments, [
       summaryHtml: '<p>ignore</p>',
       bodyHtml: ''
     },
+    tags: [],
+    isIgnored: false,
     isPrivate: false,
     isConstructor: false,
     isClass: false,
     isEvent: false,
-    ignore: false,
-    line: 31,
-    codeStart: 34
+    line: 32,
+    comment: {
+      lines: [ 32, 32 ],
+      text: 'ignore',
+      rawText: '/ ignore */',
+      fullText: '/ ignore */'
+    }
+  },
+  {
+    description: {
+      summary: 'ignore',
+      body: '',
+      text: 'ignore',
+      html: '<p>ignore</p>',
+      summaryHtml: '<p>ignore</p>',
+      bodyHtml: ''
+    },
+    tags: [],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 33,
+    comment: {
+      lines: [ 33, 34 ],
+      text: 'ignore',
+      rawText: '/\n * ignore\n */',
+      fullText: '/\n * ignore\n */'
+    }
   }
 ], 'comments match')
 })
