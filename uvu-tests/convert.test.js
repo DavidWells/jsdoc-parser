@@ -31,8 +31,10 @@ export type TinyProps = {
 
 test('typeConverter tyoe', async () => {
   const result = typeConverter(singleType)
+  /*
   console.log(result)
   console.log(result.jsdoc)
+  /** */
   // console.log('foundValues', foundValues)
   assert.equal(result, {
     jsdoc: '/**\n' +

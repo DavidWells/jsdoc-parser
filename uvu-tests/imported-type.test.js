@@ -22,7 +22,9 @@ export default function ButtonImport(props) {
 
 test('Resolve basic imported types', async () => {
   const result = doxxx.parseComments(tsImport)
+  /*
   deepLog(result)
+  /** */
   // console.log('foundValues', foundValues)
   assert.ok(result[0].tags.length)
   assert.ok(result[0].tags[0].importedType)

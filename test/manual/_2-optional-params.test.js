@@ -38,6 +38,8 @@ function sayYo(somebody) {
 }
 `
 
+
+
 const codeTwox = `
 /**
  * An optional parameter (using Google Closure Compiler syntax)
@@ -272,6 +274,49 @@ assert.equal(comments, [
     codeLines: [ 28, 33 ]
   }
 ], 'comments match')
+})
+
+
+test('Code default value as object', async () => {
+  const codeWithdefaultValueAsObject = `
+/**
+ * An optional parameter and default value
+ * @param {string} [somebody={ name: John Doe }] - Somebody's name.
+ */
+function sayCool(somebody) {
+  if (!somebody) {
+    somebody = 'John Doe';
+  }
+  alert('Hello ' + somebody);
+}
+`
+  const comments = doxxx.parseComments(codeWithdefaultValueAsObject)
+  /*
+  deepLog(comments)
+  process.exit(1)
+  /** */
+  assert.equal(comments[0].tags[0].defaultValue, { name: 'John Doe' }, 'comments match')
+})
+
+test('Code default value as array', async () => {
+  const codeWithdefaultValueAsArray = `
+  /**
+   * An optional parameter and default value
+   * @param {string} [somebody=['one', 'two', 'three']] - Somebody's name.
+   */
+  function sayCool(somebody) {
+    if (!somebody) {
+      somebody = 'John Doe';
+    }
+    alert('Hello ' + somebody);
+  }
+  `
+  const comments = doxxx.parseComments(codeWithdefaultValueAsArray)
+  /*
+  deepLog(comments)
+  process.exit(1)
+  /** */
+  assert.equal(comments[0].tags[0].defaultValue, ['one', 'two', 'three'], 'comments match')
 })
 
 test.run()

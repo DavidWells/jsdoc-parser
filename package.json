@@ -41,13 +41,14 @@
     "commander": "~2.20.0",
     "jsdoctypeparser": "^9.0.0",
     "markdown-it": "~9.0.1",
+    "oparser": "^2.2.0",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
+    "esm": "^3.2.25",
     "mocha": "~6.2.0",
     "parse-imports": "^1.1.0",
     "should": "~13.2.3",
-    "uvu": "^0.5.3",
-    "esm": "^3.2.25"
+    "uvu": "^0.5.3"
   }
 }
