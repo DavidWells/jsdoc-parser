@@ -24,10 +24,13 @@ test('Resolve basic imported types', async () => {
   const result = doxxx.parseComments(tsImport)
   /*
   deepLog(result)
+  // process.exit(1)
   /** */
+  
   // console.log('foundValues', foundValues)
   assert.ok(result[0].tags.length)
   assert.ok(result[0].tags[0].importedType)
+
 assert.equal(result, [
   {
     description: {
@@ -55,8 +58,8 @@ assert.equal(result, [
         importedType: {
           name: 'Chill',
           type: 'number[]',
-          filePath: '/Users/david/Downloads/Backup/david/repos/doxxx/_imported-type.ts',
-          location: '/Users/david/Downloads/Backup/david/repos/doxxx/_imported-type.ts:1:0',
+          filePath: '/Users/david/Workspace/repos/jsdoc-parser/_imported-type.ts',
+          location: '/Users/david/Workspace/repos/jsdoc-parser/_imported-type.ts:1:0',
           start: 0,
           end: 46,
           code: '/**\n * Chill\n */\nexport type Chill = number[];',

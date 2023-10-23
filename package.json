@@ -31,6 +31,7 @@
   "scripts": {
     "test": "npm run uvu && npm run test:manual && make test",
     "test:manual": "uvu test/manual '.test.([mc]js|[jt]sx?)$'",
+    "x": "uvu  -r esm uvu-tests 'empty-file.test.([mc]js|[jt]sx?)$'",
     "uvu": "uvu uvu-tests -r esm",
     "publish": "git push origin && git push origin --tags",
     "release:patch": "npm version patch && npm publish",
