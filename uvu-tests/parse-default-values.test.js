@@ -29,6 +29,7 @@ test('Resolve default values', async () => {
 
   assert.equal(result, [
     {
+      type: 'MarkdownMagicOptions',
       description: {
         summary: '',
         body: '',
@@ -281,5 +282,3 @@ test('Resolve default values', async () => {
 })
 
 test.run()
-
-

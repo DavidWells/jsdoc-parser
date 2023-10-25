@@ -58,4 +58,20 @@ test('Parses trailing ignore ! in function', async () => {
   assert.equal(result[0].isIgnored, true)
 })
 
+const codeThree = `
+/**
+ * Function Name
+ *
+ * @ignore
+ * @param {String} a
+ * @param {Number} b
+ */
+`
+
+test('Ignore via @ignore tag', async () => {
+  const result = doxxx.parseComments(codeThree)
+  // deepLog(result)
+  assert.equal(result[0].isIgnored, true)
+})
+
 test.run()

@@ -37,6 +37,7 @@ export default function ButtonTwo(props = {}) {
 
 assert.equal(comments, [
   {
+    type: 'Props',
     description: {
       summary: '',
       body: '',
@@ -50,8 +51,8 @@ assert.equal(comments, [
         tagType: 'typedef',
         tagValue: 'Props',
         tagFull: '@typedef Props',
-        name: '',
-        nameRaw: '',
+        name: 'Props',
+        nameRaw: 'Props',
         description: '',
         type: 'Props',
         types: [ 'Props' ],
