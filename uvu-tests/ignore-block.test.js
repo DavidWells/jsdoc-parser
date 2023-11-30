@@ -36,7 +36,6 @@ test('Parses trailing ignore !', async () => {
         lines: [ 2, 5 ],
         text: '!\nTest\nhere',
         rawText: '/**!\n * Test\n * here\n */',
-        fullText: '/**!\n * Test\n * here\n */'
       }
     }
   ])

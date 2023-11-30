@@ -176,19 +176,6 @@ assert.equal(comments, [
         '* @settings foo=bar baz=yippe\n' +
         '* @return {boolean} - React component\n' +
         '*/',
-      fullText: '/**\n' +
-        '* Checks if person is cool\n' +
-        '*\n' +
-        '* This is a great function\n' +
-        '*\n' +
-        "* @param  {string}  [name='bob'] - persons name\n" +
-        '* @param  {object}  [opts] - Cool checker options\n' +
-        '* @param  {string}  [opts.age] - Persons age\n' +
-        '* @param  {string}  [opts.height=100] - Persons height\n' +
-        '* @param  {boolean} [opts.isRad] - Rad checker\n' +
-        '* @settings foo=bar baz=yippe\n' +
-        '* @return {boolean} - React component\n' +
-        '*/'
     },
     code: 'export default function isCool(name, opts = {}) {\n' +
       '  if(opts.isRad) return true\n' +

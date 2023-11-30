@@ -40,7 +40,6 @@ test('Match comment ignore', async () => {
         lines: [ 2, 2 ],
         text: 'ignore',
         rawText: '/*! ignore */',
-        fullText: '/*! ignore */'
       }
     }
   ], 'ignore')
@@ -79,7 +78,6 @@ assert.equal(twoComments, [
       lines: [ 2, 4 ],
       text: 'ignore',
       rawText: '/*!\n  * ignore\n  */',
-      fullText: '/*!\n  * ignore\n  */'
     }
   }
 ], 'ignore two')
@@ -124,7 +122,6 @@ assert.equal(comments, [
       lines: [ 3, 8 ],
       text: 'description text \n\nWith a body of junk',
       rawText: '/**   \n   * description text \n   * \n   * With a body of junk\n   */',
-      fullText: '/**   \n   * description text \n   * \n   * With a body of junk\n   */'
     }
   }
 ])
@@ -203,7 +200,6 @@ assert.equal(comments, [
       lines: [ 2, 3 ],
       text: 'ignore',
       rawText: '/*\n * ignore\n */',
-      fullText: '/*\n * ignore\n */'
     }
   }
 ])
@@ -244,7 +240,6 @@ assert.equal(comments, [
       lines: [ 2, 4 ],
       text: 'description text',
       rawText: '/** \n * description text \n */',
-      fullText: '/** \n * description text \n */'
     }
   },
   {
@@ -325,14 +320,6 @@ assert.equal(comments, [
         ' * @module name - description text\n' +
         ' * @module name\n' +
         ' */',
-      fullText: '/**\n' +
-        ' * description\n' +
-        ' * @module {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text\n' +
-        ' * @module {Type} name description text\n' +
-        ' * @module [name] - description text\n' +
-        ' * @module name - description text\n' +
-        ' * @module name\n' +
-        ' */'
     }
   },
   {
@@ -366,7 +353,6 @@ assert.equal(comments, [
       lines: [ 15, 16 ],
       text: '@extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text',
       rawText: '/** @extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text */',
-      fullText: '/** @extends {Type.<Type,Type(Type,Type.<Type>)>} [name={}] - description text */'
     }
   },
   {
@@ -400,7 +386,6 @@ assert.equal(comments, [
       lines: [ 16, 16 ],
       text: '@extends {Type} name description text',
       rawText: '/** @extends {Type} name description text */',
-      fullText: '/** @extends {Type} name description text */'
     }
   },
   {
@@ -434,7 +419,6 @@ assert.equal(comments, [
       lines: [ 17, 17 ],
       text: '@extends [name] - description text',
       rawText: '/** @extends [name] - description text */',
-      fullText: '/** @extends [name] - description text */'
     }
   },
   {
@@ -468,7 +452,6 @@ assert.equal(comments, [
       lines: [ 18, 18 ],
       text: '@extends namex - description text',
       rawText: '/** @extends namex - description text */',
-      fullText: '/** @extends namex - description text */'
     }
   },
   {
@@ -502,7 +485,6 @@ assert.equal(comments, [
       lines: [ 19, 19 ],
       text: '@extends namey',
       rawText: '/** @extends namey */',
-      fullText: '/** @extends namey */'
     }
   },
   {
@@ -535,7 +517,6 @@ assert.equal(comments, [
       lines: [ 21, 22 ],
       text: '@tag {Type.<Type,Type(Type,Type.<Type>)>} - description text',
       rawText: '/** @tag {Type.<Type,Type(Type,Type.<Type>)>} - description text */',
-      fullText: '/** @tag {Type.<Type,Type(Type,Type.<Type>)>} - description text */'
     }
   },
   {
@@ -568,7 +549,6 @@ assert.equal(comments, [
       lines: [ 22, 22 ],
       text: '@tag {Type} description text',
       rawText: '/** @tag {Type} description text */',
-      fullText: '/** @tag {Type} description text */'
     }
   },
   {
@@ -601,7 +581,6 @@ assert.equal(comments, [
       lines: [ 23, 23 ],
       text: '@tag - description text',
       rawText: '/** @tag - description text */',
-      fullText: '/** @tag - description text */'
     }
   },
   {
@@ -634,7 +613,6 @@ assert.equal(comments, [
       lines: [ 24, 24 ],
       text: '@tag description text',
       rawText: '/** @tag description text */',
-      fullText: '/** @tag description text */'
     }
   },
   {
@@ -667,7 +645,6 @@ assert.equal(comments, [
       lines: [ 25, 25 ],
       text: '@tag',
       rawText: '/** @tag */',
-      fullText: '/** @tag */'
     }
   },
   {
@@ -690,7 +667,6 @@ assert.equal(comments, [
       lines: [ 27, 27 ],
       text: 'ignore',
       rawText: '/! ignore */',
-      fullText: '/! ignore */'
     }
   },
   {
@@ -713,7 +689,6 @@ assert.equal(comments, [
       lines: [ 28, 29 ],
       text: 'ignore',
       rawText: '/!\n * ignore\n */',
-      fullText: '/!\n * ignore\n */'
     }
   },
   {
@@ -736,7 +711,6 @@ assert.equal(comments, [
       lines: [ 32, 32 ],
       text: 'ignore',
       rawText: '/ ignore */',
-      fullText: '/ ignore */'
     }
   },
   {
@@ -759,7 +733,6 @@ assert.equal(comments, [
       lines: [ 33, 34 ],
       text: 'ignore',
       rawText: '/\n * ignore\n */',
-      fullText: '/\n * ignore\n */'
     }
   }
 ], 'comments match')

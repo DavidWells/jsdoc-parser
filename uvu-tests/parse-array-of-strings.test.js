@@ -59,7 +59,6 @@ assert.equal(result,[
       lines: [ 1, 4 ],
       text: 'TypeScript style\n@type {Rgb[]}',
       rawText: '/**\n  * TypeScript style\n  * @type {Rgb[]}\n  */',
-      fullText: '/**\n  * TypeScript style\n  * @type {Rgb[]}\n  */'
     },
     code: 'const color2 = [{ red: 111, green: 111, blue: 111 }];',
     ctx: {
@@ -162,11 +161,6 @@ assert.equal(result, [
         ' * @param {Array.<string>}\n' +
         ' * @return {React.ReactElement} - React component\n' +
         ' */',
-      fullText: '/**\n' +
-        ' * Renders a <Button /> component\n' +
-        ' * @param {Array.<string>}\n' +
-        ' * @return {React.ReactElement} - React component\n' +
-        ' */'
     },
     code: 'export default function ButtonTwo(props = {}) {\n' +
       '  return (\n' +

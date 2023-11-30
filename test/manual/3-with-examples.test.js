@@ -264,28 +264,6 @@ assert.equal(comments, [
         '*   Words\n' +
         '* </Button>\n' +
         '*/',
-      fullText: '/**\n' +
-        '* Renders a <Button /> component\n' +
-        '* @param  {object}  [props] - Button props\n' +
-        '* @param  {string}  [props.text] - My button\n' +
-        '* @param  {boolean} [props.isActive] - is button active\n' +
-        '* @param  {string}  [props.className] - CSS class name\n' +
-        '* @param  {React.ReactNode} [props.children] - component children;\n' +
-        '* @param  {React.CSSProperties} [props.style] - used to set the CSS of the button\n' +
-        '* @return {React.ReactElement} - React component\n' +
-        '* @example\n' +
-        "  <Button className='cool'>\n" +
-        '    Words\n' +
-        '  </Button>\n' +
-        '* @example\n' +
-        "  <Button className='other'>\n" +
-        '    Words\n' +
-        '  </Button>\n' +
-        '* @example\n' +
-        "* <Button className='third'>\n" +
-        '*   Words\n' +
-        '* </Button>\n' +
-        '*/'
     },
     code: 'export default function Button(props = {}) {\n' +
       '  return (\n' +

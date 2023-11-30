@@ -140,10 +140,6 @@ assert.equal(comments, [
         ' * An optional parameter (using JSDoc syntax)\n' +
         " * @param {string} [somebody] - Somebody's name.\n" +
         ' */',
-      fullText: '/**\n' +
-        ' * An optional parameter (using JSDoc syntax)\n' +
-        " * @param {string} [somebody] - Somebody's name.\n" +
-        ' */'
     },
     codeStart: 6,
     code: 'function sayHello(somebody) {\n' +
@@ -200,10 +196,6 @@ assert.equal(comments, [
         ' * An optional parameter (using Google Closure Compiler syntax)\n' +
         " * @param {string=} somebody - Somebody's name.\n" +
         ' */',
-      fullText: '/**\n' +
-        ' * An optional parameter (using Google Closure Compiler syntax)\n' +
-        " * @param {string=} somebody - Somebody's name.\n" +
-        ' */'
     },
     codeStart: 17,
     code: 'function sayBye(somebody) {\n' +
@@ -257,10 +249,6 @@ assert.equal(comments, [
         ' * An optional parameter and default value\n' +
         " * @param {string} [somebody=John Doe] - Somebody's name.\n" +
         ' */',
-      fullText: '/**\n' +
-        ' * An optional parameter and default value\n' +
-        " * @param {string} [somebody=John Doe] - Somebody's name.\n" +
-        ' */'
     },
     code: 'function sayYo(somebody) {\n' +
       '  if (!somebody) {\n' +

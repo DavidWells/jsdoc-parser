@@ -173,14 +173,6 @@ assert.equal(comments, [
         ' * @prop {React.CSSProperties} [overrideStyles] - used to set the CSS of the button\n' +
         ' * @prop {()=>void} [onLogin]\n' +
         ' */',
-      fullText: '/**\n' +
-        ' * @typedef Props\n' +
-        ' * @prop {string} [text] - My button\n' +
-        ' * @prop {string} [textColor] - the color of the text in the button\n' +
-        ' * @prop {string} [bgColor] - the background color of the button\n' +
-        ' * @prop {React.CSSProperties} [overrideStyles] - used to set the CSS of the button\n' +
-        ' * @prop {()=>void} [onLogin]\n' +
-        ' */'
     }
   },
   {
@@ -249,13 +241,6 @@ assert.equal(comments, [
         ' * @param {Props} props\n' +
         ' * @return {React.ReactElement} - React component\n' +
         ' */',
-      fullText: '/**\n' +
-        ' * Renders a <Button /> component\n' +
-        ' * \n' +
-        ' * Lol hi hi hi\n' +
-        ' * @param {Props} props\n' +
-        ' * @return {React.ReactElement} - React component\n' +
-        ' */'
     },
     code: 'export default function ButtonTwo(props = {}) {\n' +
       '  return (\n' +

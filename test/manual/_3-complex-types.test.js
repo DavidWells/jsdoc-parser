@@ -225,12 +225,6 @@ assert.equal(comments, [
         ' * @param {number|{name:string,age:number}|Array} a\n' +
         ' * @returns {{name:string,age:number}}\n' +
         ' */',
-      fullText: '/**\n' +
-        ' *\n' +
-        ' * @param {number|string|{name:string,age:number}} a\n' +
-        ' * @param {number|{name:string,age:number}|Array} a\n' +
-        ' * @returns {{name:string,age:number}}\n' +
-        ' */'
     },
     codeStart: 8,
     code: 'function complexTypeParamAndReturn(a, b) {\n' +
@@ -364,10 +358,6 @@ assert.equal(comments, [
         ' *\n' +
         ' * @param {number | string | {length: number, type: {name: {first: string, last: string}, id: number | string}}} a Description of param\n' +
         ' */',
-      fullText: '/**\n' +
-        ' *\n' +
-        ' * @param {number | string | {length: number, type: {name: {first: string, last: string}, id: number | string}}} a Description of param\n' +
-        ' */'
     },
     codeStart: 19,
     code: 'function nestedComplexTypeParam(a) {\n\n}',
@@ -420,7 +410,6 @@ assert.equal(comments, [
       lines: [ 23, 26 ],
       text: '@param {number=} a',
       rawText: '/**\n *\n * @param {number=} a\n */',
-      fullText: '/**\n *\n * @param {number=} a\n */'
     },
     codeStart: 27,
     code: 'function optionalParam(a) {\n\n}',
@@ -473,7 +462,6 @@ assert.equal(comments, [
       lines: [ 31, 34 ],
       text: '@param {?number} a',
       rawText: '/**\n *\n * @param {?number} a\n */',
-      fullText: '/**\n *\n * @param {?number} a\n */'
     },
     codeStart: 35,
     code: 'function nullableParam(a) {\n\n}',
@@ -526,7 +514,6 @@ assert.equal(comments, [
       lines: [ 39, 42 ],
       text: '@param {!number} a',
       rawText: '/**\n *\n * @param {!number} a\n */',
-      fullText: '/**\n *\n * @param {!number} a\n */'
     },
     codeStart: 43,
     code: 'function nonNullableParam(a) {\n\n}',
@@ -579,7 +566,6 @@ assert.equal(comments, [
       lines: [ 47, 50 ],
       text: '@param {...number} a',
       rawText: '/**\n *\n * @param {...number} a\n */',
-      fullText: '/**\n *\n * @param {...number} a\n */'
     },
     codeStart: 51,
     code: 'function variableParam(a) {\n\n}',
@@ -635,7 +621,6 @@ assert.equal(comments, [
       lines: [ 55, 57 ],
       text: '@param {?...number=} a - foobar',
       rawText: '/*\n *\n * @param {?...number=} a - foobar\n */',
-      fullText: '/*\n *\n * @param {?...number=} a - foobar\n */'
     },
     code: 'function optionalVariableNullableParam(a) {\n\n}',
     ctx: {

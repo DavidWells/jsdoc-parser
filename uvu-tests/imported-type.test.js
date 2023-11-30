@@ -139,11 +139,6 @@ assert.equal(result, [
         ' * @param { import("./_imported-type").Chill } isChill\n' +
         ' * @return {React.ReactElement} - React component\n' +
         ' */',
-      fullText: '/**\n' +
-        ' * Renders a <ButtonImport /> component with imported types\n' +
-        ' * @param { import("./_imported-type").Chill } isChill\n' +
-        ' * @return {React.ReactElement} - React component\n' +
-        ' */'
     },
     code: 'export default function ButtonImport(props) {\n' +
       '  return (\n' +
