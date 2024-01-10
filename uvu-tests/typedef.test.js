@@ -30,7 +30,6 @@ const codeTwo = `
  * Configuration for markdown magic
  * 
  * Below is the main config for markdown magic
- * 
  * @typedef {object} MarkdownMagicOptions
  * @property {Array} [transforms = defaultTransforms] - Custom commands to transform block contents, see transforms & custom transforms sections below.
  * @property {string} [outputDir] - Change output path of new content. Default behavior is replacing the original file
@@ -46,9 +45,10 @@ const codeTwo = `
  * @property {boolean} [failOnMissingTransforms = false] - Fail if transform functions are missing. Default skip blocks.
  */
 `
-  const result = doxxx.parseComments(codeTwo)
-  /*
+  const result = doxxx.parseComments(codeTwo, {raw: false})
+  //*
   deepLog(result)
+  process.exit(1)
   /** */
   assert.equal(result[0].type, 'SyntaxType')
   assert.equal(result[0].description.text, 'Allowed file syntaxes')
@@ -87,7 +87,7 @@ export default function ButtonTwo(props = {}) {
 }
 `
   const comments = doxxx.parseComments(codeThree)
-  /*
+  //*
   deepLog(comments)
   /** */
   assert.equal(comments[0].type, 'Props')
