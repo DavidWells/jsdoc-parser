@@ -25,7 +25,9 @@ const basicDocBlock = `
  * @property {boolean} [failOnMissingTransforms = false] - Fail if transform functions are missing. Default skip blocks.
  */
 `
-  const comments = doxxx.parseComments(basicDocBlock)
+  const comments = doxxx.parseComments(basicDocBlock, {
+    // raw: true
+  })
   /*
   deepLog(comments)
   process.exit(1)

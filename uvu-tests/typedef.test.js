@@ -46,7 +46,7 @@ const codeTwo = `
  */
 `
   const result = doxxx.parseComments(codeTwo, {raw: false})
-  //*
+  /*
   deepLog(result)
   process.exit(1)
   /** */
