@@ -3,6 +3,134 @@ const assert = require('uvu/assert')
 const doxxx = require('../../lib/dox')
 const deepLog = require('../utils/log')
 
+
+test('pattern with md link', () => {
+  const x = `/**
+ * ### API
+ * 
+ * Markdown Magic Instance
+ * 
+ * @param {string|MarkdownMagicOptions} globOrOpts - Files to process or config. Uses [globby patterns](https://github.com/sindresorhus/multimatch/blob/master/test.js)
+ * @param {MarkdownMagicOptions} [options] - Markdown magic config
+ * @returns {Promise<MarkdownMagicResult>}
+ * @example
+  markdownMagic(filePath, config)
+ */`
+   const comments = doxxx.parseComments(x, {
+    // raw: true
+  })
+  /*
+  deepLog(comments)
+  process.exit(1)
+  /** */
+assert.equal(comments, 
+[
+  {
+    description: {
+      summary: '### API',
+      body: 'Markdown Magic Instance',
+      text: '### API\n\nMarkdown Magic Instance',
+      html: '<h3>API</h3>\n<p>Markdown Magic Instance</p>',
+      summaryHtml: '<h3>API</h3>',
+      bodyHtml: '<p>Markdown Magic Instance</p>'
+    },
+    tags: [
+      {
+        tagType: 'param',
+        name: 'globOrOpts',
+        nameRaw: 'globOrOpts',
+        description: 'Files to process or config. Uses [globby patterns](https://github.com/sindresorhus/multimatch/blob/master/test.js)',
+        tagValue: '{string|MarkdownMagicOptions} globOrOpts - Files to process or config. Uses [globby patterns](https://github.com/sindresorhus/multimatch/blob/master/test.js)',
+        tagFull: '@param {string|MarkdownMagicOptions} globOrOpts - Files to process or config. Uses [globby patterns](https://github.com/sindresorhus/multimatch/blob/master/test.js)',
+        type: 'string | MarkdownMagicOptions',
+        types: [ 'string', 'MarkdownMagicOptions' ],
+        isOptional: false,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
+        jsDocAst: {
+          type: 'UNION',
+          left: { type: 'NAME', name: 'string' },
+          right: { type: 'NAME', name: 'MarkdownMagicOptions' }
+        }
+      },
+      {
+        tagType: 'param',
+        name: 'options',
+        nameRaw: '[options]',
+        description: 'Markdown magic config',
+        tagValue: '{MarkdownMagicOptions} [options] - Markdown magic config',
+        tagFull: '@param {MarkdownMagicOptions} [options] - Markdown magic config',
+        type: 'MarkdownMagicOptions',
+        types: [ 'MarkdownMagicOptions' ],
+        isOptional: true,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
+        jsDocAst: { type: 'NAME', name: 'MarkdownMagicOptions' }
+      },
+      {
+        tagType: 'returns',
+        tagValue: '{Promise<MarkdownMagicResult>}',
+        tagFull: '@returns {Promise<MarkdownMagicResult>}',
+        type: 'Promise<MarkdownMagicResult>',
+        types: [ 'GENERIC' ],
+        isOptional: false,
+        isNullable: false,
+        isNonNullable: false,
+        isVariadic: false,
+        jsDocAst: {
+          type: 'GENERIC',
+          subject: { type: 'NAME', name: 'Promise' },
+          objects: [ { type: 'NAME', name: 'MarkdownMagicResult' } ],
+          meta: { syntax: 'ANGLE_BRACKET' }
+        },
+        html: '<p>{Promise<MarkdownMagicResult>}</p>'
+      },
+      {
+        tagType: 'example',
+        name: '',
+        nameRaw: '',
+        description: '',
+        tagValue: 'markdownMagic(filePath, config)',
+        tagFull: '@example\n  markdownMagic(filePath, config)',
+        html: '<pre><code>markdownMagic(filePath, config)</code></pre>'
+      }
+    ],
+    isIgnored: false,
+    isPrivate: false,
+    isConstructor: false,
+    isClass: false,
+    isEvent: false,
+    line: 1,
+    comment: {
+      lines: [ 1, 11 ],
+      text: '### API\n' +
+        '\n' +
+        'Markdown Magic Instance\n' +
+        '\n' +
+        '@param {string|MarkdownMagicOptions} globOrOpts - Files to process or config. Uses [globby patterns](https://github.com/sindresorhus/multimatch/blob/master/test.js)\n' +
+        '@param {MarkdownMagicOptions} [options] - Markdown magic config\n' +
+        '@returns {Promise<MarkdownMagicResult>}\n' +
+        '@example\n' +
+        '  markdownMagic(filePath, config)',
+      rawText: '/**\n' +
+        ' * ### API\n' +
+        ' * \n' +
+        ' * Markdown Magic Instance\n' +
+        ' * \n' +
+        ' * @param {string|MarkdownMagicOptions} globOrOpts - Files to process or config. Uses [globby patterns](https://github.com/sindresorhus/multimatch/blob/master/test.js)\n' +
+        ' * @param {MarkdownMagicOptions} [options] - Markdown magic config\n' +
+        ' * @returns {Promise<MarkdownMagicResult>}\n' +
+        ' * @example\n' +
+        '  markdownMagic(filePath, config)\n' +
+        ' */'
+    }
+  }
+])
+
+})
+
 test('basicDocBlock', async () => {
 const basicDocBlock = `
 /**
