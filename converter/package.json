@@ -1,0 +1,28 @@
+{
+  "name": "converter",
+  "version": "1.0.0",
+  "main": "_code-to-doc.test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "uvu": "^0.5.6"
+  },
+  "dependencies": {
+    "@structured-types/api": "^3.46.12",
+    "@structured-types/prop-types-plugin": "^3.46.12",
+    "@structured-types/react-plugin": "^3.46.12",
+    "acorn": "^8.8.1",
+    "acorn-jsx": "^5.3.2",
+    "acorn-walk": "^8.2.0",
+    "generate-comparators": "^1.0.3",
+    "inspect-function": "^0.4.0",
+    "inspect-parameters-declaration": "^0.1.0",
+    "oparser": "^3.0.22",
+    "lebab": "^3.1.1"
+  }
+}
