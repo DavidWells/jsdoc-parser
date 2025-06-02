@@ -53,7 +53,7 @@ export default function Button(props = {}) {
 const x = `
 /**
 * Renders a <Button /> component
-* @param { import("./types").Pet } p - Pet type
+* @param { import("../fixtures/Types.d.ts").Pet } p - Pet type
 * @return {React.ReactElement} - React component
 * @example
   <Button>
@@ -67,6 +67,10 @@ export default function Button(props = {}) {
 }
 `
 
-var obj = dox.parseComments(x);
+var obj = dox.parseComments(x, {
+  // Set dir name to correctly resolve the type import path
+  cwd: __dirname
+})
+
 const { inspect } = require('util')
 console.log(inspect(obj, {showHidden: false, depth: null}))
