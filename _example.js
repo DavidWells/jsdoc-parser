@@ -5,8 +5,9 @@ function deepLog(x) {
   console.log(inspect(x, {showHidden: false, depth: null}))
 }
 
-const code = `
+const codeOne = `
 /**
+ * This is a function that returns a complex type
  *
  * @param {number|string|{name:string,age:number}} a
  * @param {number|{name:string,age:number}|Array} a
@@ -19,12 +20,6 @@ function complexTypeParamAndReturn(a, b) {
   }
 }
 `
-
-/*
-deepLog(doxxx.parseComments(code))
-// process.exit(1)
-/** */
-
 
 const codeTwo = `
 /**
@@ -96,6 +91,8 @@ deepLog(doxxx.parseComments(codeThree))
 
 const codeFour = `
 import React from 'react'
+import { useState } from 'react'
+
 /**
  * This is a type def for tiny prop thingy
  * @typedef {object} TinyProps
@@ -108,17 +105,39 @@ import React from 'react'
  * Renders a <ButtonImport /> component with imported types
  * @param {TinyProps} props
  * @return {React.ReactElement} - React component
+ * @example
+   // Example 1
+   <ButtonImport message="Click Me!" />
+   // Example 2
+   <ButtonImport />
  */
 export default function ButtonImport(props) {
+  const [count, setCount] = useState(0)
   return (
-    <button>
+    <button onClick={() => setCount(count + 1)}>
       {props.message || 'my button'}
+      {count}
     </button>
   )
 }
 `
 
 //*
+deepLog(doxxx.parseComments(codeOne))
+// process.exit(1)
+/** */
+
+/*
+deepLog(doxxx.parseComments(codeTwo))
+// process.exit(1)
+/** */
+
+/*
+deepLog(doxxx.parseComments(codeThree))
+// process.exit(1)
+/** */
+
+/*
 deepLog(doxxx.parseComments(codeFour))
 // process.exit(1)
 /** */
