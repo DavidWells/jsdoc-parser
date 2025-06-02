@@ -1,7 +1,7 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
-import doxxx from '../lib/dox'
-import deepLog from '../test/utils/log'
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+const doxxx = require('../lib/dox')
+const deepLog = require('../test/utils/log')
 
 
 test.only('Resolve default values', async () => {

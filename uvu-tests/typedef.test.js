@@ -1,7 +1,7 @@
-import { test } from 'uvu'
-import doxxx from '../lib/dox'
-import * as assert from 'uvu/assert'
-import deepLog from '../test/utils/log'
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+const doxxx = require('../lib/dox')
+const deepLog = require('../test/utils/log')
 
 test('Add type if singular typedef', async () => {
   const code = `
@@ -93,8 +93,6 @@ export default function ButtonTwo(props = {}) {
   assert.equal(comments[0].type, 'Props')
   assert.equal(comments[0].description.text, 'component props')
 })
-
-
 
 
 test.run()

@@ -1,6 +1,7 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
-import { getRequires, getTypeImports, getImports } from '../lib/utils/get-imports'
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+const doxxx = require('../lib/dox')
+const { getRequires, getTypeImports, getImports } = require('../lib/utils/get-imports')
 
 
 test.after(() => console.log('tests done'))

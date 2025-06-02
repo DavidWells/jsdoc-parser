@@ -1,6 +1,7 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
-import convert from '../lib/utils/json-to-jsdoc'
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+const doxxx = require('../lib/dox')
+const convert = require('../lib/utils/json-to-jsdoc')
 
 
 test.after(() => console.log('tests done'))

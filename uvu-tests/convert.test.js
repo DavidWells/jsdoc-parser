@@ -1,6 +1,6 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
-import typeConverter from '../lib/utils/convert'
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+const typeConverter = require('../lib/utils/convert')
 
 
 test.after(() => console.log('tests done'))

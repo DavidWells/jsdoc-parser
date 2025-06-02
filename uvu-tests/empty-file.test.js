@@ -1,6 +1,6 @@
-import { test } from 'uvu'
-import doxxx from '../lib/dox'
-import * as assert from 'uvu/assert'
+const { test } = require('uvu')
+const doxxx = require('../lib/dox')
+const assert = require('uvu/assert')
 
 const emptyCode = ``
 
