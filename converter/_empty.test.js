@@ -14,6 +14,7 @@ test('Handles empty function', async () => {
   const code = await fs.readFile(path.resolve(__dirname, 'tests/fixtures/empty-function.js'), 'utf8')
   const values = parseCode(code)
   deepLog(values)
+  process.exit(1)
   assert.equal(values, [
     {
       name: 'emptyFunction',

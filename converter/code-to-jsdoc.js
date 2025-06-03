@@ -17,9 +17,7 @@ const MyParser = Parser.extend(
   require("acorn-jsx")(),
 )
 
-
-const UNKNOWN_VALUE = '__unknown__'
-const UNKNOWN_REFERENCE = '__unknown_reference__'
+const { UNKNOWN_VALUE, UNKNOWN_REFERENCE } = require('./_constants')
 
 // https://regex101.com/r/AnDQda/6 based on https://regex101.com/r/WGqfm8/9/
 const FN_REGEX = /^(?:[\s]+)?(?:const|let|var|export|export\s+default)?(?:[a-z0-9.]+(?:\.prototype)?)?(?:\s)?(?:[a-z0-9-_{}:\s]+\s?=)?\s?(?:[a-z0-9]+\s+\:\s+)?(?:async\s+)?(?:function\*?\s*)?(?:[a-z0-9_-]+)?\s?\(.*\)\s?(?:.+)?([=>]:)?\{(?:(?:[^}{]+|\{(?:[^}{]+|\{[^}{]*\})*\})*\}(?:\s?\(.*\)\s?\)\s?)?)?(?:\;)?$/gim
@@ -197,7 +195,7 @@ function functionFinder(ast) {
     const node = nodes[index]
     console.log('node', node)
 
-    /* Match Var declarated fns */
+    /* Match Var declared functions. var, const, let */
     if (node.type === 'VariableDeclaration' && node.declarations) {
       const foundFns = getFnsFromVars(node)
       if (foundFns && foundFns.length) {
@@ -261,16 +259,21 @@ function functionFinder(ast) {
  */
 function findFunctions(ast, codeText) {
   const functions = functionFinder(ast)
-  console.log('functions.length', functions.length)
-  const fnDeets = getFnInfo(functions, codeText)
   /*
-  deepLog('fnDeets', fnDeets)
-  console.log('fnDeets')
+  console.log('functions.length', functions.length)
+  console.log('functions', functions)
   process.exit(1)
   /** */
-  return fnDeets
 
-
+  /* Return function details */
+  const fnDetails = getFnInfo(functions, codeText)
+  /*
+  delete fnDetails[0].params.ast
+  deepLog('fnDetails', fnDetails)
+  console.log(Object.keys(fnDetails[0]))
+  process.exit(1)
+  /** */
+  return fnDetails
 
   if (ast && ast.body) {
     // deepLog(ast.body)
@@ -387,7 +390,6 @@ function findFunctions(ast, codeText) {
   }
   return fns
 }
-
 
 function getFnsFromVars(node) {
   var fnsFromVars = []
@@ -576,10 +578,8 @@ function parseCode(codeToParse, opts = {}) {
   })
   deepLog('foundFunctions', fns)
 
+  /* Return function details */
   return fns
-
-  
-
 
   process.exit(1)
   // console.log('ast')
@@ -1242,11 +1242,12 @@ function resolveId(node) {
 }
 
 function getNodeValue(node) {
-  if (node.type === 'Literal') {
-    return node.value || `${UNKNOWN_VALUE}ref_:${node.name}`
+  if (node.type === 'Literal' && node.name) {
+    return `${UNKNOWN_REFERENCE}${node.name}`
   }
   if (node.type === 'Identifier') {
-    return node.name
+    // const { refThing = refValue } = api
+    return `${UNKNOWN_REFERENCE}${node.name}`
   }
   if (node.type === 'ArrayExpression') {
     return node.elements.map((el) => el.value)
@@ -1275,8 +1276,12 @@ function getNodeValue(node) {
   if (typeof node.value === 'string' && node.value === '') {
     return node.value
   }
+
+  if (typeof node.value !== 'undefined') {
+    return node.value
+  }
+
   return (
-    node.value || 
     /* { foo: unknownVarRef } */
     // __unknown__ref_
     `${UNKNOWN_VALUE}ref_:${node.name}`
@@ -1360,6 +1365,7 @@ function getAssignment(node, parentNode) {
     if (parentNode && parentNode.key && parentNode.type === 'Property') {
       newNode = parentNode.key
     }
+    console.log('node.right', node.right)
     newNode.defaultValue = getNodeValue(node.right)
     return newNode
   }

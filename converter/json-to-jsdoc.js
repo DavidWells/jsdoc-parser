@@ -1,5 +1,6 @@
 const {comparators, composeComparators} = require('generate-comparators');
 
+const { UNKNOWN_VALUE, UNKNOWN_REFERENCE } = require('./_constants')
 // Generate data from types https://github.com/deanshub/data-from-types
 
 function checkIfNeededToAddUndefinedType(obj, objectKey) {
@@ -38,7 +39,7 @@ function keepUniqueTypes(obj, jsonObjects) {
   const remainingObject = {};
   const numberOfJSONDefinitions = jsonObjects.length;
 
-  Object.keys(obj).forEach(objectKey => {
+  Object.keys(obj).forEach((objectKey) => {
     if (!objectKey.includes(".")) {
       if (obj[objectKey].length < numberOfJSONDefinitions) {
         temporaryObject[objectKey].push("undefined");
@@ -79,8 +80,11 @@ function getUnique(array) {
  * @returns {string} currentType - lowerCased type of value
  */
 function getTypeOfValue(value) {
-  if (value === '__unknown__') {
+  if (value === UNKNOWN_VALUE) {
     return '*'
+  }
+  if (typeof value === 'string' && value.startsWith('__unknown__ref')) {
+    return value
   }
   let currentType = Object.prototype.toString
     .call(value)
@@ -130,6 +134,7 @@ function parseObject(obj, objectName, doNotReinsert = false) {
   Object.keys(obj).forEach(propertyName => {
     const currentValue = obj[propertyName];
     const propertyType = getTypeOfValue(currentValue);
+    console.log(`propertyType ${propertyName}`, propertyType, currentValue)
     const currentPrefix = `${prefix}${propertyName}`;
     let result = null;
 
@@ -195,22 +200,29 @@ function processTypeDef(obj, jsonObjects, opts) {
 ${openTag}\n`;
 
   // console.log('BILLY', obj)
-  let isUnknownRef = false
+
 
   const objKeys = Object.keys(obj)
+  /*
+  console.log('obj', obj)
+  console.log('objKeys', objKeys)
+  process.exit(1)
+  /** */
   console.log('obj', jsonObjects[0])
   let parentOptional = {}
   const asData = objKeys.map((key, i) => {
+    let isUnknownRef = false
     const isLast = objKeys.length === (i + 1)
     let foundDefault = dotProp(jsonObjects[0], key)
     let type = obj[key].join("|")
-    console.log(`>>>type`, obj[key])
-    console.log(`inner found default ${key}`, foundDefault)
+
     const keys = key.split('.')
     const parent = removeItem(keys, keys.length -1).join('.')
     const collection = keys[0]
+    console.log(`>>>type ${collection} - ${key}`, obj[key])
+    console.log(`inner found default ${key}`, foundDefault)
     let keyOutput = key
-    let isOptional = (foundDefault === '__unknown__') ? true : false
+    let isOptional = (foundDefault === UNKNOWN_VALUE) ? true : false
     console.log('foundDefault', foundDefault)
     if (!Array.isArray(foundDefault) && typeof foundDefault === 'object') {
       keyOutput = `[${key}]`
@@ -221,15 +233,21 @@ ${openTag}\n`;
       type = 'number'
       isOptional = true
       parentOptional[key] = true
-    } else if (foundDefault && foundDefault.indexOf('__unknown_reference__') > -1) {
-      const cleanDefault = foundDefault.replace('__unknown_reference__', '')
+    } else if (typeof foundDefault === 'boolean') {
+      keyOutput = `[${key}=${foundDefault}]`
+      type = 'boolean'
+      isOptional = true
+      parentOptional[key] = true
+    } else if (typeof foundDefault === 'string' && foundDefault.indexOf(UNKNOWN_REFERENCE) > -1) {
+      console.log('BeforefoundDefault', foundDefault)
+      const cleanDefault = foundDefault.replace(UNKNOWN_REFERENCE, '')
       keyOutput = `[${key}=${cleanDefault}]`
       foundDefault = cleanDefault
       type = '*'
       isUnknownRef = true
       isOptional = true
       parentOptional[key] = true
-    } else if (typeof foundDefault !== 'undefined' && foundDefault !== '__unknown__') {
+    } else if (typeof foundDefault !== 'undefined' && foundDefault !== UNKNOWN_VALUE) {
       keyOutput = `[${key}=${JSON.stringify(foundDefault)}]`
       isOptional = true
       parentOptional[key] = true
@@ -239,7 +257,7 @@ ${openTag}\n`;
       isOptional = true
       parentOptional[key] = true
     }
-    // keyOutput = (typeof foundDefault !== 'undefined' && foundDefault !== '__unknown__') ? `[${key}=${JSON.stringify(foundDefault)}]` : key
+    // keyOutput = (typeof foundDefault !== 'undefined' && foundDefault !== UNKNOWN_VALUE) ? `[${key}=${JSON.stringify(foundDefault)}]` : key
 
     output += `* @${prefix} {${type}} ${keyOutput}`
     if (isLast) {
@@ -247,9 +265,11 @@ ${openTag}\n`;
     }
     output += '\n'
 
-    console.log('opts.fnParams', opts.fnParams)
-    console.log('collection', collection)
     const fnParams = opts.fnParams || []
+
+    /*
+    console.log('fnParams', fnParams)
+    /** */
 
     let argPosition
     if (fnParams.length) {
@@ -257,7 +277,6 @@ ${openTag}\n`;
         return collection === param.parameter || collection === param.paramPlaceholder || collection === param.paramKey
       }).position
     }
-    console.log('foundDefault', foundDefault)
     const details = {
       tagType: prefix,
       arg: collection,
@@ -265,20 +284,23 @@ ${openTag}\n`;
       parent: parent,
       identifier: keys[keys.length - 1],
       type,
-      defaultValue: foundDefault !== '__unknown__' ? foundDefault : undefined,
+      defaultValue: foundDefault !== UNKNOWN_VALUE ? foundDefault : undefined,
       isUnknownRef,
       isOptional,
     }
 
-    if (argPosition) {
+    if (typeof argPosition !== 'undefined') {
       details.argPosition = argPosition
     }
 
     return details
   })
-  console.log('parentOptional', parentOptional)
 
+  /*
+  console.log('parentOptional', parentOptional)
   console.log('asData', asData)
+  /** */
+
   // process.exit(1)
   
   output += "*/"
@@ -310,10 +332,17 @@ function goThroughAndParse(jsonObjects, opts) {
   jsonObjects.forEach((obj) =>
     ParseRootDefinition.bind(theObjectDefinition, obj)()
   )
+  /*
+  console.log('theObjectDefinition', theObjectDefinition)
+  process.exit(1)
+  /** */
 
   const uniqueValues = keepUniqueTypes(theObjectDefinition, jsonObjects)
-  // console.log('uniqueValues', uniqueValues)
-  // process.exit(1)
+  /*
+  console.log('uniqueValues', uniqueValues)
+  process.exit(1)
+  /** */
+
   const values = processTypeDef(
     uniqueValues,
     jsonObjects,
@@ -336,8 +365,11 @@ function goThroughAndParse(jsonObjects, opts) {
     byKey.asc,
     byOptional.asc,
   )
-  // console.log('values.data', values.data)
-  // process.exit(1)
+
+  /*
+  console.log('values.data', values.data)
+  process.exit(1)
+  /** */
 
   const render = values.data.sort(composed.asc).reduce((acc, tag, i) => {
     const isFirst = i === 0
@@ -362,19 +394,19 @@ function goThroughAndParse(jsonObjects, opts) {
       if (typeof foundDefault === 'boolean') {
         defaultValueRender = `=${foundDefault}`
       } else if (Array.isArray(foundDefault)) {
-        defaultValueRender = `=${JSON.stringify(foundDefault.filter((x) => x !== '__unknown__'))}`
+        defaultValueRender = `=${JSON.stringify(foundDefault.filter((x) => x !== UNKNOWN_VALUE))}`
       } else if (tag && tag.isUnknownRef) {
         defaultValueRender = `=${foundDefault}`
       } else if (typeof foundDefault === 'number') {
         defaultValueRender = `=${foundDefault}`
-      } else if (foundDefault !== '__unknown__' && !foundDefault.startsWith('__unknown__ref')) {
+      } else if (foundDefault !== UNKNOWN_VALUE && !foundDefault.startsWith('__unknown__ref')) {
         defaultValueRender = `=${JSON.stringify(foundDefault)}`
       }
     }
     if (tag.isOptional) {
       keyOutput = `[${tag.key}${defaultValueRender}]`
     }
-    console.log('defaultValueRender' , defaultValueRender)
+    // console.log('defaultValueRender' , defaultValueRender)
     acc += `* @${tag.tagType} ${padRight(`{${tag.type}}`, maxWidth, ' ')} ${keyOutput}\n`;
     if (isLast) {
       acc += values.returnTag;
@@ -383,8 +415,11 @@ function goThroughAndParse(jsonObjects, opts) {
     return acc
   }, '/**')
 
-  // console.log('render')
-  // console.log(render)
+  /*
+  console.log('render')
+  console.log(render)
+  process.exit(1)
+  /** */
 
   return {
     data: values.data,

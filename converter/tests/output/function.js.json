@@ -1,0 +1,1583 @@
+[
+  {
+    "name": "fuzzy",
+    "nameWithKind": "function fuzzy",
+    "code": "function fuzzy(fin = 'cool', api, { funky = 'hi', dope }, fun) {\n  const {\n    awesome = 'chill',\n    rad = { whatever: 'bar', lol: { cool: true, crazy: 'word' }},\n    boss,\n    abc = false,\n    arrayThing = ['nice', 'cool'],\n    refThing = refValue\n  } = api\n\n  console.log('awesome', awesome)\n  console.log('rad', rad)\n  console.log('boss', boss)\n  console.log('abc', abc)\n  console.log('arrayThing', arrayThing)\n  console.log('refThing', refThing)\n\n  /** @type {string} */\n  const myVar = 'string';\n\n  /** @type { \"small\" | \"medium\" | \"large\" } */\n  const myVarTwo = 'small'\n\n  /** @type {typeof myVarTwo} */\n  const myVarThree = 'small'\n\n  var {\n    bunker,\n    what = '',\n    foo: asBar = ['lol'],\n    ...rest\n  } = fun\n\n  // return xyz\n  return {\n    cool: xyz\n  }\n}",
+    "isAsync": false,
+    "params": {
+      "paramStr": "fin = 'cool', api, { funky = 'hi', dope }, fun",
+      "paramNames": [
+        "fin",
+        "api",
+        "funky",
+        "dope",
+        "fun"
+      ],
+      "inferredTypes": {
+        "fin": "cool",
+        "api": {
+          "awesome": "chill",
+          "rad": {
+            "whatever": "bar",
+            "lol": {
+              "cool": true,
+              "crazy": "word"
+            }
+          },
+          "boss": "__unknown__",
+          "abc": false,
+          "arrayThing": [
+            "nice",
+            "cool"
+          ],
+          "refThing": "__unknown_reference__refValue"
+        },
+        "param3": {
+          "funky": "hi",
+          "dope": "__unknown__"
+        },
+        "fun": {
+          "bunker": "__unknown__",
+          "what": "",
+          "foo": [
+            "lol"
+          ]
+        }
+      },
+      "paramData": [
+        {
+          "parameter": "fin",
+          "defaultValue": "cool",
+          "declaration": "fin = 'cool'",
+          "position": 0,
+          "paramKey": "param1"
+        },
+        {
+          "parameter": "api",
+          "declaration": "api",
+          "position": 1,
+          "paramKey": "param2"
+        },
+        {
+          "parameter": "{ funky = 'hi', dope }",
+          "expectsDestructuring": true,
+          "declaration": "{ funky = 'hi', dope }",
+          "destructuredParameters": [
+            {
+              "parameter": "funky",
+              "defaultValue": "hi",
+              "declaration": "funky = 'hi'"
+            },
+            {
+              "parameter": "dope",
+              "declaration": "dope"
+            }
+          ],
+          "position": 2,
+          "paramKey": "param3"
+        },
+        {
+          "parameter": "fun",
+          "declaration": "fun",
+          "position": 3,
+          "paramKey": "param4"
+        }
+      ],
+      "ast": [
+        {
+          "type": "AssignmentPattern",
+          "start": 892,
+          "end": 904,
+          "left": {
+            "type": "Identifier",
+            "start": 892,
+            "end": 895,
+            "name": "fin"
+          },
+          "right": {
+            "type": "Literal",
+            "start": 898,
+            "end": 904,
+            "value": "cool",
+            "raw": "'cool'"
+          }
+        },
+        {
+          "type": "Identifier",
+          "start": 906,
+          "end": 909,
+          "name": "api"
+        },
+        {
+          "type": "ObjectPattern",
+          "start": 911,
+          "end": 933,
+          "properties": [
+            {
+              "type": "Property",
+              "start": 913,
+              "end": 925,
+              "method": false,
+              "shorthand": true,
+              "computed": false,
+              "key": {
+                "type": "Identifier",
+                "start": 913,
+                "end": 918,
+                "name": "funky"
+              },
+              "value": {
+                "type": "AssignmentPattern",
+                "start": 913,
+                "end": 925,
+                "left": {
+                  "type": "Identifier",
+                  "start": 913,
+                  "end": 918,
+                  "name": "funky"
+                },
+                "right": {
+                  "type": "Literal",
+                  "start": 921,
+                  "end": 925,
+                  "value": "hi",
+                  "raw": "'hi'"
+                }
+              },
+              "kind": "init"
+            },
+            {
+              "type": "Property",
+              "start": 927,
+              "end": 931,
+              "method": false,
+              "shorthand": true,
+              "computed": false,
+              "key": {
+                "type": "Identifier",
+                "start": 927,
+                "end": 931,
+                "name": "dope"
+              },
+              "value": {
+                "type": "Identifier",
+                "start": 927,
+                "end": 931,
+                "name": "dope"
+              },
+              "kind": "init"
+            }
+          ]
+        },
+        {
+          "type": "Identifier",
+          "start": 935,
+          "end": 938,
+          "name": "fun"
+        }
+      ]
+    },
+    "varDeclarations": {
+      "asts": [
+        {
+          "type": "VariableDeclaration",
+          "start": 944,
+          "end": 1136,
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 950,
+              "end": 1136,
+              "id": {
+                "type": "ObjectPattern",
+                "start": 950,
+                "end": 1130,
+                "properties": [
+                  {
+                    "type": "Property",
+                    "start": 956,
+                    "end": 973,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 956,
+                      "end": 963,
+                      "name": "awesome",
+                      "defaultValue": "chill"
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 956,
+                      "end": 973,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 956,
+                        "end": 963,
+                        "name": "awesome"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "start": 966,
+                        "end": 973,
+                        "value": "chill",
+                        "raw": "'chill'"
+                      }
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 979,
+                    "end": 1039,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 979,
+                      "end": 982,
+                      "name": "rad",
+                      "defaultValue": {
+                        "whatever": "bar",
+                        "lol": {
+                          "cool": true,
+                          "crazy": "word"
+                        }
+                      }
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 979,
+                      "end": 1039,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 979,
+                        "end": 982,
+                        "name": "rad"
+                      },
+                      "right": {
+                        "type": "ObjectExpression",
+                        "start": 985,
+                        "end": 1039,
+                        "properties": [
+                          {
+                            "type": "Property",
+                            "start": 987,
+                            "end": 1002,
+                            "method": false,
+                            "shorthand": false,
+                            "computed": false,
+                            "key": {
+                              "type": "Identifier",
+                              "start": 987,
+                              "end": 995,
+                              "name": "whatever"
+                            },
+                            "value": {
+                              "type": "Literal",
+                              "start": 997,
+                              "end": 1002,
+                              "value": "bar",
+                              "raw": "'bar'"
+                            },
+                            "kind": "init"
+                          },
+                          {
+                            "type": "Property",
+                            "start": 1004,
+                            "end": 1038,
+                            "method": false,
+                            "shorthand": false,
+                            "computed": false,
+                            "key": {
+                              "type": "Identifier",
+                              "start": 1004,
+                              "end": 1007,
+                              "name": "lol"
+                            },
+                            "value": {
+                              "type": "ObjectExpression",
+                              "start": 1009,
+                              "end": 1038,
+                              "properties": [
+                                {
+                                  "type": "Property",
+                                  "start": 1011,
+                                  "end": 1021,
+                                  "method": false,
+                                  "shorthand": false,
+                                  "computed": false,
+                                  "key": {
+                                    "type": "Identifier",
+                                    "start": 1011,
+                                    "end": 1015,
+                                    "name": "cool"
+                                  },
+                                  "value": {
+                                    "type": "Literal",
+                                    "start": 1017,
+                                    "end": 1021,
+                                    "value": true,
+                                    "raw": "true"
+                                  },
+                                  "kind": "init"
+                                },
+                                {
+                                  "type": "Property",
+                                  "start": 1023,
+                                  "end": 1036,
+                                  "method": false,
+                                  "shorthand": false,
+                                  "computed": false,
+                                  "key": {
+                                    "type": "Identifier",
+                                    "start": 1023,
+                                    "end": 1028,
+                                    "name": "crazy"
+                                  },
+                                  "value": {
+                                    "type": "Literal",
+                                    "start": 1030,
+                                    "end": 1036,
+                                    "value": "word",
+                                    "raw": "'word'"
+                                  },
+                                  "kind": "init"
+                                }
+                              ]
+                            },
+                            "kind": "init"
+                          }
+                        ]
+                      }
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 1045,
+                    "end": 1049,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1045,
+                      "end": 1049,
+                      "name": "boss"
+                    },
+                    "value": {
+                      "type": "Identifier",
+                      "start": 1045,
+                      "end": 1049,
+                      "name": "boss"
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 1055,
+                    "end": 1066,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1055,
+                      "end": 1058,
+                      "name": "abc",
+                      "defaultValue": false
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 1055,
+                      "end": 1066,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 1055,
+                        "end": 1058,
+                        "name": "abc"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "start": 1061,
+                        "end": 1066,
+                        "value": false,
+                        "raw": "false"
+                      }
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 1072,
+                    "end": 1101,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1072,
+                      "end": 1082,
+                      "name": "arrayThing",
+                      "defaultValue": [
+                        "nice",
+                        "cool"
+                      ]
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 1072,
+                      "end": 1101,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 1072,
+                        "end": 1082,
+                        "name": "arrayThing"
+                      },
+                      "right": {
+                        "type": "ArrayExpression",
+                        "start": 1085,
+                        "end": 1101,
+                        "elements": [
+                          {
+                            "type": "Literal",
+                            "start": 1086,
+                            "end": 1092,
+                            "value": "nice",
+                            "raw": "'nice'"
+                          },
+                          {
+                            "type": "Literal",
+                            "start": 1094,
+                            "end": 1100,
+                            "value": "cool",
+                            "raw": "'cool'"
+                          }
+                        ]
+                      }
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 1107,
+                    "end": 1126,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1107,
+                      "end": 1115,
+                      "name": "refThing",
+                      "defaultValue": "__unknown_reference__refValue"
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 1107,
+                      "end": 1126,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 1107,
+                        "end": 1115,
+                        "name": "refThing"
+                      },
+                      "right": {
+                        "type": "Identifier",
+                        "start": 1118,
+                        "end": 1126,
+                        "name": "refValue"
+                      }
+                    },
+                    "kind": "init"
+                  }
+                ]
+              },
+              "init": {
+                "type": "Identifier",
+                "start": 1133,
+                "end": 1136,
+                "name": "api"
+              }
+            }
+          ],
+          "kind": "const"
+        },
+        {
+          "type": "VariableDeclaration",
+          "start": 1355,
+          "end": 1378,
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 1361,
+              "end": 1377,
+              "id": {
+                "type": "Identifier",
+                "start": 1361,
+                "end": 1366,
+                "name": "myVar"
+              },
+              "init": {
+                "type": "Literal",
+                "start": 1369,
+                "end": 1377,
+                "value": "string",
+                "raw": "'string'"
+              }
+            }
+          ],
+          "kind": "const"
+        },
+        {
+          "type": "VariableDeclaration",
+          "start": 1430,
+          "end": 1454,
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 1436,
+              "end": 1454,
+              "id": {
+                "type": "Identifier",
+                "start": 1436,
+                "end": 1444,
+                "name": "myVarTwo"
+              },
+              "init": {
+                "type": "Literal",
+                "start": 1447,
+                "end": 1454,
+                "value": "small",
+                "raw": "'small'"
+              }
+            }
+          ],
+          "kind": "const"
+        },
+        {
+          "type": "VariableDeclaration",
+          "start": 1491,
+          "end": 1517,
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 1497,
+              "end": 1517,
+              "id": {
+                "type": "Identifier",
+                "start": 1497,
+                "end": 1507,
+                "name": "myVarThree"
+              },
+              "init": {
+                "type": "Literal",
+                "start": 1510,
+                "end": 1517,
+                "value": "small",
+                "raw": "'small'"
+              }
+            }
+          ],
+          "kind": "const"
+        },
+        {
+          "type": "VariableDeclaration",
+          "start": 1521,
+          "end": 1601,
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 1525,
+              "end": 1601,
+              "id": {
+                "type": "ObjectPattern",
+                "start": 1525,
+                "end": 1595,
+                "properties": [
+                  {
+                    "type": "Property",
+                    "start": 1531,
+                    "end": 1537,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1531,
+                      "end": 1537,
+                      "name": "bunker"
+                    },
+                    "value": {
+                      "type": "Identifier",
+                      "start": 1531,
+                      "end": 1537,
+                      "name": "bunker"
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 1543,
+                    "end": 1552,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1543,
+                      "end": 1547,
+                      "name": "what",
+                      "defaultValue": ""
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 1543,
+                      "end": 1552,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 1543,
+                        "end": 1547,
+                        "name": "what"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "start": 1550,
+                        "end": 1552,
+                        "value": "",
+                        "raw": "''"
+                      }
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "Property",
+                    "start": 1558,
+                    "end": 1578,
+                    "method": false,
+                    "shorthand": false,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 1558,
+                      "end": 1561,
+                      "name": "foo",
+                      "defaultValue": [
+                        "lol"
+                      ]
+                    },
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 1563,
+                      "end": 1578,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 1563,
+                        "end": 1568,
+                        "name": "asBar"
+                      },
+                      "right": {
+                        "type": "ArrayExpression",
+                        "start": 1571,
+                        "end": 1578,
+                        "elements": [
+                          {
+                            "type": "Literal",
+                            "start": 1572,
+                            "end": 1577,
+                            "value": "lol",
+                            "raw": "'lol'"
+                          }
+                        ]
+                      }
+                    },
+                    "kind": "init"
+                  },
+                  {
+                    "type": "RestElement",
+                    "start": 1584,
+                    "end": 1591,
+                    "argument": {
+                      "type": "Identifier",
+                      "start": 1587,
+                      "end": 1591,
+                      "name": "rest",
+                      "isRestSpread": true
+                    }
+                  }
+                ]
+              },
+              "init": {
+                "type": "Identifier",
+                "start": 1598,
+                "end": 1601,
+                "name": "fun"
+              }
+            }
+          ],
+          "kind": "var"
+        }
+      ]
+    },
+    "returnStatements": {
+      "asts": [
+        {
+          "type": "ReturnStatement",
+          "start": 1621,
+          "end": 1647,
+          "argument": {
+            "type": "ObjectExpression",
+            "start": 1628,
+            "end": 1647,
+            "properties": [
+              {
+                "type": "Property",
+                "start": 1634,
+                "end": 1643,
+                "method": false,
+                "shorthand": false,
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 1634,
+                  "end": 1638,
+                  "name": "cool"
+                },
+                "value": {
+                  "type": "Identifier",
+                  "start": 1640,
+                  "end": 1643,
+                  "name": "xyz"
+                },
+                "kind": "init"
+              }
+            ]
+          }
+        }
+      ],
+      "inferredTypes": [
+        {
+          "cool": "__unknown_reference__xyz"
+        }
+      ]
+    },
+    "leading": {
+      "leadingText": "",
+      "previousLine": "*/"
+    },
+    "position": {
+      "start": 877,
+      "end": 1649
+    },
+    "jsDocs": {
+      "name": "fuzzy",
+      "description": "function fuzzy",
+      "fnParamNames": [
+        "fin",
+        "api",
+        "funky",
+        "dope",
+        "fun"
+      ],
+      "fnParams": [
+        {
+          "parameter": "fin",
+          "defaultValue": "cool",
+          "declaration": "fin = 'cool'",
+          "position": 0,
+          "paramKey": "param1"
+        },
+        {
+          "parameter": "api",
+          "declaration": "api",
+          "position": 1,
+          "paramKey": "param2"
+        },
+        {
+          "parameter": "{ funky = 'hi', dope }",
+          "expectsDestructuring": true,
+          "declaration": "{ funky = 'hi', dope }",
+          "destructuredParameters": [
+            {
+              "parameter": "funky",
+              "defaultValue": "hi",
+              "declaration": "funky = 'hi'"
+            },
+            {
+              "parameter": "dope",
+              "declaration": "dope"
+            }
+          ],
+          "position": 2,
+          "paramKey": "param3"
+        },
+        {
+          "parameter": "fun",
+          "declaration": "fun",
+          "position": 3,
+          "paramKey": "param4"
+        }
+      ],
+      "returnStatements": [
+        {
+          "cool": "__unknown_reference__xyz"
+        }
+      ],
+      "isFunction": true,
+      "data": [
+        {
+          "tagType": "param",
+          "arg": "fin",
+          "key": "fin",
+          "parent": "",
+          "identifier": "fin",
+          "type": "string",
+          "defaultValue": "cool",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 0
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api",
+          "parent": "",
+          "identifier": "api",
+          "type": "object",
+          "defaultValue": {
+            "awesome": "chill",
+            "rad": {
+              "whatever": "bar",
+              "lol": {
+                "cool": true,
+                "crazy": "word"
+              }
+            },
+            "boss": "__unknown__",
+            "abc": false,
+            "arrayThing": [
+              "nice",
+              "cool"
+            ],
+            "refThing": "__unknown_reference__refValue"
+          },
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.abc",
+          "parent": "api",
+          "identifier": "abc",
+          "type": "boolean",
+          "defaultValue": false,
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.arrayThing",
+          "parent": "api",
+          "identifier": "arrayThing",
+          "type": "Array<string>",
+          "defaultValue": [
+            "nice",
+            "cool"
+          ],
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.awesome",
+          "parent": "api",
+          "identifier": "awesome",
+          "type": "string",
+          "defaultValue": "chill",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.boss",
+          "parent": "api",
+          "identifier": "boss",
+          "type": "*",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.rad",
+          "parent": "api",
+          "identifier": "rad",
+          "type": "object",
+          "defaultValue": {
+            "whatever": "bar",
+            "lol": {
+              "cool": true,
+              "crazy": "word"
+            }
+          },
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.rad.lol",
+          "parent": "api.rad",
+          "identifier": "lol",
+          "type": "object",
+          "defaultValue": {
+            "cool": true,
+            "crazy": "word"
+          },
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.rad.lol.cool",
+          "parent": "api.rad.lol",
+          "identifier": "cool",
+          "type": "boolean",
+          "defaultValue": true,
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.rad.lol.crazy",
+          "parent": "api.rad.lol",
+          "identifier": "crazy",
+          "type": "string",
+          "defaultValue": "word",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.rad.whatever",
+          "parent": "api.rad",
+          "identifier": "whatever",
+          "type": "string",
+          "defaultValue": "bar",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "api",
+          "key": "api.refThing",
+          "parent": "api",
+          "identifier": "refThing",
+          "type": "*",
+          "defaultValue": "refValue",
+          "isUnknownRef": true,
+          "isOptional": true,
+          "argPosition": 1
+        },
+        {
+          "tagType": "param",
+          "arg": "param3",
+          "key": "param3",
+          "parent": "",
+          "identifier": "param3",
+          "type": "object",
+          "defaultValue": {
+            "funky": "hi",
+            "dope": "__unknown__"
+          },
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 2
+        },
+        {
+          "tagType": "param",
+          "arg": "param3",
+          "key": "param3.dope",
+          "parent": "param3",
+          "identifier": "dope",
+          "type": "*",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 2
+        },
+        {
+          "tagType": "param",
+          "arg": "param3",
+          "key": "param3.funky",
+          "parent": "param3",
+          "identifier": "funky",
+          "type": "string",
+          "defaultValue": "hi",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 2
+        },
+        {
+          "tagType": "param",
+          "arg": "fun",
+          "key": "fun",
+          "parent": "",
+          "identifier": "fun",
+          "type": "object",
+          "defaultValue": {
+            "bunker": "__unknown__",
+            "what": "",
+            "foo": [
+              "lol"
+            ]
+          },
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 3
+        },
+        {
+          "tagType": "param",
+          "arg": "fun",
+          "key": "fun.bunker",
+          "parent": "fun",
+          "identifier": "bunker",
+          "type": "*",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 3
+        },
+        {
+          "tagType": "param",
+          "arg": "fun",
+          "key": "fun.foo",
+          "parent": "fun",
+          "identifier": "foo",
+          "type": "Array<string>",
+          "defaultValue": [
+            "lol"
+          ],
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 3
+        },
+        {
+          "tagType": "param",
+          "arg": "fun",
+          "key": "fun.what",
+          "parent": "fun",
+          "identifier": "what",
+          "type": "string",
+          "defaultValue": "",
+          "isUnknownRef": false,
+          "isOptional": true,
+          "argPosition": 3
+        }
+      ],
+      "render": "/**\n* function fuzzy\n* @param {string}        [fin=\"cool\"]\n* @param {object}        [api]\n* @param {boolean}       [api.abc=false]\n* @param {Array<string>} [api.arrayThing=[\"nice\",\"cool\"]]\n* @param {string}        [api.awesome=\"chill\"]\n* @param {*}             [api.boss]\n* @param {object}        [api.rad]\n* @param {object}        [api.rad.lol]\n* @param {boolean}       [api.rad.lol.cool=true]\n* @param {string}        [api.rad.lol.crazy=\"word\"]\n* @param {string}        [api.rad.whatever=\"bar\"]\n* @param {*}             [api.refThing=refValue]\n* @param {object}        [param3]\n* @param {*}             [param3.dope]\n* @param {string}        [param3.funky=\"hi\"]\n* @param {object}        [fun]\n* @param {*}             [fun.bunker]\n* @param {Array<string>} [fun.foo=[\"lol\"]]\n* @param {string}        [fun.what=\"\"]\n* @return {object}\n*/"
+    },
+    "comment": {
+      "description": {
+        "summary": "This thing does xyz",
+        "body": "",
+        "text": "This thing does xyz",
+        "html": "<p>This thing does xyz</p>",
+        "summaryHtml": "<p>This thing does xyz</p>",
+        "bodyHtml": ""
+      },
+      "tags": [
+        {
+          "tagType": "param",
+          "name": "fin",
+          "nameRaw": "[fin=\"cool\"]",
+          "description": "",
+          "tagValue": "{string}        [fin=\"cool\"]",
+          "tagFull": "@param {string}        [fin=\"cool\"]",
+          "defaultValue": "cool",
+          "type": "string",
+          "types": [
+            "string"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "string"
+          },
+          "html": "<p>{string}        [fin=&quot;cool&quot;]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api",
+          "nameRaw": "[api]",
+          "description": "",
+          "tagValue": "{object}        [api]",
+          "tagFull": "@param {object}        [api]",
+          "type": "object",
+          "types": [
+            "object"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "object"
+          },
+          "html": "<p>{object}        [api]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.abc",
+          "nameRaw": "[api.abc=false]",
+          "description": "",
+          "tagValue": "{boolean}       [api.abc=false]",
+          "tagFull": "@param {boolean}       [api.abc=false]",
+          "defaultValue": false,
+          "type": "boolean",
+          "types": [
+            "boolean"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "boolean"
+          },
+          "html": "<p>{boolean}       [api.abc=false]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.arrayThing",
+          "nameRaw": "[api.arrayThing=[\"nice\",\"cool\"]]",
+          "description": "",
+          "tagValue": "{Array<string>} [api.arrayThing=[\"nice\",\"cool\"]]",
+          "tagFull": "@param {Array<string>} [api.arrayThing=[\"nice\",\"cool\"]]",
+          "defaultValue": [
+            "nice",
+            "cool"
+          ],
+          "type": "Array<string>",
+          "types": [
+            "Array<string>"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "GENERIC",
+            "subject": {
+              "type": "NAME",
+              "name": "Array"
+            },
+            "objects": [
+              {
+                "type": "NAME",
+                "name": "string"
+              }
+            ],
+            "meta": {
+              "syntax": "ANGLE_BRACKET"
+            }
+          },
+          "html": "<p>{Array<string>} [api.arrayThing=[&quot;nice&quot;,&quot;cool&quot;]]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.awesome",
+          "nameRaw": "[api.awesome=\"chill\"]",
+          "description": "",
+          "tagValue": "{string}        [api.awesome=\"chill\"]",
+          "tagFull": "@param {string}        [api.awesome=\"chill\"]",
+          "defaultValue": "chill",
+          "type": "string",
+          "types": [
+            "string"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "string"
+          },
+          "html": "<p>{string}        [api.awesome=&quot;chill&quot;]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.boss",
+          "nameRaw": "[api.boss]",
+          "description": "",
+          "tagValue": "{*}             [api.boss]",
+          "tagFull": "@param {*}             [api.boss]",
+          "type": "*",
+          "types": [
+            "ANY"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "ANY"
+          },
+          "html": "<p>{*}             [api.boss]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.rad",
+          "nameRaw": "[api.rad]",
+          "description": "",
+          "tagValue": "{object}        [api.rad]",
+          "tagFull": "@param {object}        [api.rad]",
+          "type": "object",
+          "types": [
+            "object"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "object"
+          },
+          "html": "<p>{object}        [api.rad]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.rad.lol",
+          "nameRaw": "[api.rad.lol]",
+          "description": "",
+          "tagValue": "{object}        [api.rad.lol]",
+          "tagFull": "@param {object}        [api.rad.lol]",
+          "type": "object",
+          "types": [
+            "object"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "object"
+          },
+          "html": "<p>{object}        [api.rad.lol]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.rad.lol.cool",
+          "nameRaw": "[api.rad.lol.cool=true]",
+          "description": "",
+          "tagValue": "{boolean}       [api.rad.lol.cool=true]",
+          "tagFull": "@param {boolean}       [api.rad.lol.cool=true]",
+          "defaultValue": true,
+          "type": "boolean",
+          "types": [
+            "boolean"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "boolean"
+          },
+          "html": "<p>{boolean}       [api.rad.lol.cool=true]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.rad.lol.crazy",
+          "nameRaw": "[api.rad.lol.crazy=\"word\"]",
+          "description": "",
+          "tagValue": "{string}        [api.rad.lol.crazy=\"word\"]",
+          "tagFull": "@param {string}        [api.rad.lol.crazy=\"word\"]",
+          "defaultValue": "word",
+          "type": "string",
+          "types": [
+            "string"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "string"
+          },
+          "html": "<p>{string}        [api.rad.lol.crazy=&quot;word&quot;]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.rad.whatever",
+          "nameRaw": "[api.rad.whatever=\"bar\"]",
+          "description": "",
+          "tagValue": "{string}        [api.rad.whatever=\"bar\"]",
+          "tagFull": "@param {string}        [api.rad.whatever=\"bar\"]",
+          "defaultValue": "bar",
+          "type": "string",
+          "types": [
+            "string"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "string"
+          },
+          "html": "<p>{string}        [api.rad.whatever=&quot;bar&quot;]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "api.refThing",
+          "nameRaw": "[api.refThing=refValue]",
+          "description": "",
+          "tagValue": "{*}             [api.refThing=refValue]",
+          "tagFull": "@param {*}             [api.refThing=refValue]",
+          "defaultValue": "refValue",
+          "type": "*",
+          "types": [
+            "ANY"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "ANY"
+          },
+          "html": "<p>{*}             [api.refThing=refValue]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "param3",
+          "nameRaw": "[param3]",
+          "description": "",
+          "tagValue": "{object}        [param3]",
+          "tagFull": "@param {object}        [param3]",
+          "type": "object",
+          "types": [
+            "object"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "object"
+          },
+          "html": "<p>{object}        [param3]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "param3.dope",
+          "nameRaw": "[param3.dope]",
+          "description": "",
+          "tagValue": "{*}             [param3.dope]",
+          "tagFull": "@param {*}             [param3.dope]",
+          "type": "*",
+          "types": [
+            "ANY"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "ANY"
+          },
+          "html": "<p>{*}             [param3.dope]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "param3.funky",
+          "nameRaw": "[param3.funky]",
+          "description": "",
+          "tagValue": "{*}             [param3.funky]",
+          "tagFull": "@param {*}             [param3.funky]",
+          "type": "*",
+          "types": [
+            "ANY"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "ANY"
+          },
+          "html": "<p>{*}             [param3.funky]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "fun",
+          "nameRaw": "[fun]",
+          "description": "",
+          "tagValue": "{object}        [fun]",
+          "tagFull": "@param {object}        [fun]",
+          "type": "object",
+          "types": [
+            "object"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "object"
+          },
+          "html": "<p>{object}        [fun]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "fun.bunker",
+          "nameRaw": "[fun.bunker]",
+          "description": "",
+          "tagValue": "{*}             [fun.bunker]",
+          "tagFull": "@param {*}             [fun.bunker]",
+          "type": "*",
+          "types": [
+            "ANY"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "ANY"
+          },
+          "html": "<p>{*}             [fun.bunker]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "fun.foo",
+          "nameRaw": "[fun.foo=[\"lol\"]]",
+          "description": "",
+          "tagValue": "{Array<string>} [fun.foo=[\"lol\"]]",
+          "tagFull": "@param {Array<string>} [fun.foo=[\"lol\"]]",
+          "defaultValue": [
+            "lol"
+          ],
+          "type": "Array<string>",
+          "types": [
+            "Array<string>"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "GENERIC",
+            "subject": {
+              "type": "NAME",
+              "name": "Array"
+            },
+            "objects": [
+              {
+                "type": "NAME",
+                "name": "string"
+              }
+            ],
+            "meta": {
+              "syntax": "ANGLE_BRACKET"
+            }
+          },
+          "html": "<p>{Array<string>} [fun.foo=[&quot;lol&quot;]]</p>"
+        },
+        {
+          "tagType": "param",
+          "name": "fun.what",
+          "nameRaw": "[fun.what=]",
+          "description": "",
+          "tagValue": "{string}        [fun.what=]",
+          "tagFull": "@param {string}        [fun.what=]",
+          "type": "string",
+          "types": [
+            "string"
+          ],
+          "isOptional": true,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "string"
+          },
+          "html": "<p>{string}        [fun.what=]</p>"
+        },
+        {
+          "tagType": "return",
+          "tagValue": "{object}",
+          "tagFull": "@return {object}",
+          "type": "object",
+          "types": [
+            "object"
+          ],
+          "isOptional": false,
+          "isNullable": false,
+          "isNonNullable": false,
+          "isVariadic": false,
+          "jsDocAst": {
+            "type": "NAME",
+            "name": "object"
+          },
+          "html": "<p>{object}</p>"
+        }
+      ],
+      "isIgnored": false,
+      "isPrivate": false,
+      "isConstructor": false,
+      "isClass": false,
+      "isEvent": false,
+      "line": 4,
+      "comment": {
+        "lines": [
+          4,
+          26
+        ],
+        "text": "This thing does xyz\n@param {string}        [fin=\"cool\"]\n@param {object}        [api]\n@param {boolean}       [api.abc=false]\n@param {Array<string>} [api.arrayThing=[\"nice\",\"cool\"]]\n@param {string}        [api.awesome=\"chill\"]\n@param {*}             [api.boss]\n@param {object}        [api.rad]\n@param {object}        [api.rad.lol]\n@param {boolean}       [api.rad.lol.cool=true]\n@param {string}        [api.rad.lol.crazy=\"word\"]\n@param {string}        [api.rad.whatever=\"bar\"]\n@param {*}             [api.refThing=refValue]\n@param {object}        [param3]\n@param {*}             [param3.dope]\n@param {*}             [param3.funky]\n@param {object}        [fun]\n@param {*}             [fun.bunker]\n@param {Array<string>} [fun.foo=[\"lol\"]]\n@param {string}        [fun.what=]\n@return {object}",
+        "rawText": "/**\n* This thing does xyz\n* @param {string}        [fin=\"cool\"]\n* @param {object}        [api]\n* @param {boolean}       [api.abc=false]\n* @param {Array<string>} [api.arrayThing=[\"nice\",\"cool\"]]\n* @param {string}        [api.awesome=\"chill\"]\n* @param {*}             [api.boss]\n* @param {object}        [api.rad]\n* @param {object}        [api.rad.lol]\n* @param {boolean}       [api.rad.lol.cool=true]\n* @param {string}        [api.rad.lol.crazy=\"word\"]\n* @param {string}        [api.rad.whatever=\"bar\"]\n* @param {*}             [api.refThing=refValue]\n* @param {object}        [param3]\n* @param {*}             [param3.dope]\n* @param {*}             [param3.funky]\n* @param {object}        [fun]\n* @param {*}             [fun.bunker]\n* @param {Array<string>} [fun.foo=[\"lol\"]]\n* @param {string}        [fun.what=]\n* @return {object}\n*/"
+      },
+      "codeStart": 27,
+      "code": "function fuzzy(fin = 'cool', api, { funky = 'hi', dope }, fun) {\n  const {\n    awesome = 'chill',\n    rad = { whatever: 'bar', lol: { cool: true, crazy: 'word' }},\n    boss,\n    abc = false,\n    arrayThing = ['nice', 'cool'],\n    refThing = refValue\n  } = api\n\n  console.log('awesome', awesome)\n  console.log('rad', rad)\n  console.log('boss', boss)\n  console.log('abc', abc)\n  console.log('arrayThing', arrayThing)\n  console.log('refThing', refThing)",
+      "ctx": {
+        "type": "function",
+        "name": "fuzzy",
+        "text": "fuzzy()"
+      },
+      "validationErrors": []
+    }
+  }
+]

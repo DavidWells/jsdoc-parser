@@ -15,11 +15,54 @@ test('Exports api', async () => {
   assert.is(typeof convertToJSDoc, 'function', 'Exports convertToJSDoc')
 })
 
-test('Run it', async () => {
+test.only('Run it', async () => {
+  const code = await fs.readFile(path.resolve(__dirname, 'tests/fixtures/function.js'), 'utf8')
+  const values = parseCode(code)
+
+  assert.equal(values.length, 1)
+  deepLog(values)
+  console.log(Object.keys(values[0]))
+  await fs.writeFile(
+    path.resolve(__dirname, 'tests/output/function.js.json'),
+    JSON.stringify(values, null, 2)
+  )
+  process.exit(1)
+  values.forEach(({ jsDocs }) => {
+    console.log(jsDocs.render)
+    assert.equal(jsDocs.render, `/**
+* This thing does xyz
+* @param {string}   [fin="cool"]
+* @param {object}   [api]
+* @param {boolean}  [api.abc=false]
+* @param {string[]} [api.arrayThing=["nice","cool"]]
+* @param {string}   [api.awesome="chill"]
+* @param {*}        [api.boss]
+* @param {object}   [api.rad]
+* @param {object}   [api.rad.lol]
+* @param {boolean}  [api.rad.lol.cool=true]
+* @param {string}   [api.rad.whatever="bar"]
+* @param {*}        [api.refThing]
+* @param {object}   [param2]
+* @param {*}        [param2.dope]
+* @param {*}        [param2.funky]
+* @param {object}   [fun]
+* @param {*}        [fun.bunker]
+* @param {string[]} [fun.foo=["lol"]]
+* @param {string}   [fun.what=""]
+* @return {object}
+*/`)
+  })
+})
+
+
+test('2 empty functions', async () => {
   //const code = await fs.readFile(path.resolve(__dirname, 'tests/fixtures/function.js'), 'utf8')
   const code = await fs.readFile(path.resolve(__dirname, 'tests/fixtures/two-functions.js'), 'utf8')
   const values = parseCode(code)
+
+  assert.equal(values.length, 2)
   deepLog(values)
+  process.exit(1)
   values.forEach(({ render }) => {
     console.log(render)
     assert.equal(render, `/**
