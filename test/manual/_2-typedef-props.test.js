@@ -173,7 +173,8 @@ assert.equal(comments, [
         ' * @prop {React.CSSProperties} [overrideStyles] - used to set the CSS of the button\n' +
         ' * @prop {()=>void} [onLogin]\n' +
         ' */',
-    }
+    },
+    validationErrors: []
   },
   {
     description: {
@@ -242,6 +243,7 @@ assert.equal(comments, [
         ' * @return {React.ReactElement} - React component\n' +
         ' */',
     },
+    validationErrors: [],
     code: 'export default function ButtonTwo(props = {}) {\n' +
       '  return (\n' +
       "    <button>{props.text || 'my button'}</button>\n" +

@@ -60,6 +60,7 @@ assert.equal(result,[
       text: 'TypeScript style\n@type {Rgb[]}',
       rawText: '/**\n  * TypeScript style\n  * @type {Rgb[]}\n  */',
     },
+    validationErrors: [],
     code: 'const color2 = [{ red: 111, green: 111, blue: 111 }];',
     ctx: {
       type: 'declaration',
@@ -162,6 +163,7 @@ assert.equal(result, [
         ' * @return {React.ReactElement} - React component\n' +
         ' */',
     },
+    validationErrors: [],
     code: 'export default function ButtonTwo(props = {}) {\n' +
       '  return (\n' +
       "    <button>{props.text || 'my button'}</button>\n" +

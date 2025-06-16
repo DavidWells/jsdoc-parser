@@ -226,6 +226,10 @@ assert.equal(comments, [
         ' * @returns {{name:string,age:number}}\n' +
         ' */',
     },
+    validationErrors: [{
+      type: 'DUPLICATE_PARAM',
+      message: 'Duplicate parameter name: a (used 2 times)'
+    }],
     codeStart: 8,
     code: 'function complexTypeParamAndReturn(a, b) {\n' +
       '  return {\n' +
@@ -359,6 +363,7 @@ assert.equal(comments, [
         ' * @param {number | string | {length: number, type: {name: {first: string, last: string}, id: number | string}}} a Description of param\n' +
         ' */',
     },
+    validationErrors: [],
     codeStart: 19,
     code: 'function nestedComplexTypeParam(a) {\n\n}',
     ctx: {
@@ -411,6 +416,7 @@ assert.equal(comments, [
       text: '@param {number=} a',
       rawText: '/**\n *\n * @param {number=} a\n */',
     },
+    validationErrors: [],
     codeStart: 27,
     code: 'function optionalParam(a) {\n\n}',
     ctx: {
@@ -463,6 +469,7 @@ assert.equal(comments, [
       text: '@param {?number} a',
       rawText: '/**\n *\n * @param {?number} a\n */',
     },
+    validationErrors: [],
     codeStart: 35,
     code: 'function nullableParam(a) {\n\n}',
     ctx: {
@@ -515,6 +522,7 @@ assert.equal(comments, [
       text: '@param {!number} a',
       rawText: '/**\n *\n * @param {!number} a\n */',
     },
+    validationErrors: [],
     codeStart: 43,
     code: 'function nonNullableParam(a) {\n\n}',
     ctx: {
@@ -567,6 +575,7 @@ assert.equal(comments, [
       text: '@param {...number} a',
       rawText: '/**\n *\n * @param {...number} a\n */',
     },
+    validationErrors: [],
     codeStart: 51,
     code: 'function variableParam(a) {\n\n}',
     ctx: {
@@ -622,6 +631,7 @@ assert.equal(comments, [
       text: '@param {?...number=} a - foobar',
       rawText: '/*\n *\n * @param {?...number=} a - foobar\n */',
     },
+    validationErrors: [],
     code: 'function optionalVariableNullableParam(a) {\n\n}',
     ctx: {
       type: 'function',

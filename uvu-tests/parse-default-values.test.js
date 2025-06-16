@@ -262,7 +262,8 @@ assert.equal(result, [
         " * @property {object} [testObj = { foo: 'bar' }] - default object value \n" +
         " * @property {array} [testArr = ['one, 'two', 'three']] - default object value \n" +
         ' */',
-    }
+    },
+    validationErrors: []
   }
 ])
 })

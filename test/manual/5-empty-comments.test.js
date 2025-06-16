@@ -200,7 +200,8 @@ assert.equal(comments, [
       lines: [ 2, 3 ],
       text: 'ignore',
       rawText: '/*\n * ignore\n */',
-    }
+    },
+    validationErrors: []
   }
 ])
 

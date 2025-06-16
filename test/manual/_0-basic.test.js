@@ -125,7 +125,8 @@ assert.equal(comments,
         ' * @example\n' +
         '  markdownMagic(filePath, config)\n' +
         ' */'
-    }
+    },
+    validationErrors: []
   }
 ])
 
@@ -422,7 +423,8 @@ assert.equal(comments,
         ' * @property {boolean} [debug = false] - See debug details\n' +
         ' * @property {boolean} [failOnMissingTransforms = false] - Fail if transform functions are missing. Default skip blocks.\n' +
         ' */'
-    }
+    },
+    validationErrors: []
   }
 ]
 , 'comments match')

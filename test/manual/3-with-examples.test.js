@@ -265,6 +265,7 @@ assert.equal(comments, [
         '* </Button>\n' +
         '*/',
     },
+    validationErrors: [],
     code: 'export default function Button(props = {}) {\n' +
       '  return (\n' +
       '    <button style={props.style}>\n' +

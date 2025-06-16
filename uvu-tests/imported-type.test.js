@@ -140,6 +140,7 @@ assert.equal(result, [
         ' * @return {React.ReactElement} - React component\n' +
         ' */',
     },
+    validationErrors: [],
     code: 'export default function ButtonImport(props) {\n' +
       '  return (\n' +
       '    <button>\n' +
