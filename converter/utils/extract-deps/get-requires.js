@@ -85,8 +85,9 @@ if (require.main === module) {
 
 
   //*
-  const requires = getStaticRequires(code)
+  const requires = getRequires(code)
   console.log('requires', requires)
+  requires.forEach(item => console.log(item))
   /** */
 }
 
