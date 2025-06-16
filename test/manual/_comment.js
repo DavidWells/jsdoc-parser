@@ -18,7 +18,7 @@ const code = `
 /**
  *
  * @param {number|string|{name:string,age:number}} a
- * @param {number|{name:string,age:number}|Array} a
+ * @param {number|{name:string,age:number}|Array} b
  * @returns {{name:string,age:number}}
  */
 function complexTypeParamAndReturn(a, b) {
@@ -42,4 +42,3 @@ deepLog(doxxx.parseComments(code))
 //*
 console.log('test')
 /****** */
-

@@ -2,6 +2,7 @@ const { test } = require('uvu')
 const assert = require('uvu/assert')
 const doxxx = require('../../lib/dox')
 const deepLog = require('../utils/log')
+const assertNoDiffs = require('../utils/object-diff')
 
 test('API is exposed', async () => {
   assert.is(typeof doxxx.parseComments, 'function')
@@ -34,7 +35,7 @@ export default function Button(props = {}) {
   process.exit(1)
   /** */
 
-assert.equal(comments, [
+  const result = [
   {
     description: {
       summary: 'Renders a <Button /> component',
@@ -205,9 +206,13 @@ assert.equal(comments, [
     ctx: { type: 'function', name: 'Button', text: 'Button()' },
     codeStart: 12,
     codeEnd: 19,
-    codeLines: [ 12, 19 ]
+    codeLines: [ 12, 19 ],
+    validationErrors: []
   }
-], 'comments match')
+]
+
+  assertNoDiffs(result[0], comments[0])
+  assert.equal(comments, result, 'comments match')
 })
 
 test.run()

@@ -184,7 +184,8 @@ assert.equal(comments, [
     ctx: { type: 'function', name: 'isCool', text: 'isCool()' },
     codeStart: 15,
     codeEnd: 18,
-    codeLines: [ 15, 18 ]
+    codeLines: [ 15, 18 ],
+    validationErrors: []
   }
 ], 'comments match')
 })

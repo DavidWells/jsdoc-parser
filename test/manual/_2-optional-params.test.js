@@ -2,6 +2,7 @@ const { test } = require('uvu')
 const assert = require('uvu/assert')
 const doxxx = require('../../lib/dox')
 const deepLog = require('../utils/log')
+const assertNoDiffs = require('../utils/object-diff')
 
 const optionalParamCode = `
 /**
@@ -98,8 +99,7 @@ test('Code with optional params', async () => {
   deepLog(comments)
   process.exit(1)
   /** */
-
-assert.equal(comments, [
+  const result = [
   {
     description: {
       summary: 'An optional parameter (using JSDoc syntax)',
@@ -150,7 +150,8 @@ assert.equal(comments, [
       '}',
     ctx: { type: 'function', name: 'sayHello', text: 'sayHello()' },
     codeEnd: 11,
-    codeLines: [ 6, 11 ]
+    codeLines: [ 6, 11 ],
+    validationErrors: []
   },
   {
     description: {
@@ -206,7 +207,8 @@ assert.equal(comments, [
       '}',
     ctx: { type: 'function', name: 'sayBye', text: 'sayBye()' },
     codeEnd: 22,
-    codeLines: [ 17, 22 ]
+    codeLines: [ 17, 22 ],
+    validationErrors: []
   },
   {
     description: {
@@ -259,14 +261,19 @@ assert.equal(comments, [
     ctx: { type: 'function', name: 'sayYo', text: 'sayYo()' },
     codeStart: 28,
     codeEnd: 33,
-    codeLines: [ 28, 33 ]
+    codeLines: [ 28, 33 ],
+    validationErrors: []
   }
-], 'comments match')
+]
+
+assertNoDiffs(result, comments)
+
+assert.equal(comments, result, 'comments match')
 })
 
 
 test('Code default value as object', async () => {
-  const codeWithdefaultValueAsObject = `
+  const codeWithDefaultValueAsObject = `
 /**
  * An optional parameter and default value
  * @param {string} [somebody={ name: John Doe }] - Somebody's name.
@@ -278,7 +285,7 @@ function sayCool(somebody) {
   alert('Hello ' + somebody);
 }
 `
-  const comments = doxxx.parseComments(codeWithdefaultValueAsObject)
+  const comments = doxxx.parseComments(codeWithDefaultValueAsObject)
   /*
   deepLog(comments)
   process.exit(1)
@@ -287,7 +294,7 @@ function sayCool(somebody) {
 })
 
 test('Code default value as array', async () => {
-  const codeWithdefaultValueAsArray = `
+  const codeWithDefaultValueAsArray = `
   /**
    * An optional parameter and default value
    * @param {string} [somebody=['one', 'two', 'three']] - Somebody's name.
@@ -299,7 +306,7 @@ test('Code default value as array', async () => {
     alert('Hello ' + somebody);
   }
   `
-  const comments = doxxx.parseComments(codeWithdefaultValueAsArray)
+  const comments = doxxx.parseComments(codeWithDefaultValueAsArray)
   /*
   deepLog(comments)
   process.exit(1)
